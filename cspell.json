@@ -1,0 +1,10 @@
+{
+  "version": "0.2",
+  "allowCompoundWords": true,
+  "ignorePaths": ["node_modules", ".vscode", ".git/objects", "pnpm-lock.yaml"],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "ignoreWords": [],
+  "import": [],
+  "words": ["clsx", "drei", "gltf", "vitest", "zustand"]
+}

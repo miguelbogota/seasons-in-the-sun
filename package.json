@@ -1,0 +1,59 @@
+{
+  "name": "seasons-in-the-sun",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "npm": "9",
+    "node": "18"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "watch": "next dev -p 4000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write .",
+    "test:unit": "vitest run .",
+    "test:unit-watch": "vitest .",
+    "test:spelling": "cspell stdin --no-must-find-files --file-list",
+    "test:lint-staged": "lint-staged"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.80.3",
+    "@react-three/fiber": "^8.13.7",
+    "@react-three/rapier": "^1.1.1",
+    "clsx": "^2.0.0",
+    "next": "13.4.17",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "three": "^0.155.0",
+    "zustand": "^4.4.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^14.0.0",
+    "@types/node": "20.5.0",
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
+    "@types/three": "^0.155.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "cspell": "^7.0.0",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.17",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "globals": "^13.21.0",
+    "husky": "^8.0.0",
+    "jest-extended": "^4.0.1",
+    "jsdom": "^22.1.0",
+    "lint-staged": "^14.0.0",
+    "prettier": "^3.0.2",
+    "sass": "^1.66.0",
+    "typescript": "5.1.6",
+    "vitest": "^0.34.2"
+  }
+}
