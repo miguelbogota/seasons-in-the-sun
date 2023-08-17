@@ -1,6 +1,5 @@
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-// import nextConfig from 'eslint-config-next';
 import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import reactPlugin from 'eslint-plugin-react';
@@ -42,6 +41,7 @@ export default [
     // Project and files settings.
     files: ['**/*.tsx', '**/*.ts', '**/*.js', '**/*.jsx', '**/*.mjs'],
     rules: {
+      ...reactPlugin.configs.recommended.rules,
       ...reactHooksPlugin.configs.recommended.rules,
       ...tsPlugin.configs.recommended.rules,
       ...tsPlugin.configs.strict.rules,
@@ -106,6 +106,8 @@ export default [
           varsIgnorePattern: '^_',
         },
       ],
+
+      'react/react-in-jsx-scope': 'off',
     },
   },
   {
@@ -119,7 +121,7 @@ export default [
   },
   {
     // Page files settings.
-    files: ['app/*.tsx', 'app/*.ts'],
+    files: ['app/**/*.tsx', 'app/**/*.ts'],
     rules: {
       'import/no-default-export': 'off',
     },
