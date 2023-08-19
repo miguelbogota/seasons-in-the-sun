@@ -5,4 +5,5 @@ public
 *.ico
 *.log
 *.lock
+pnpm-lock.yaml
 generated

@@ -1,13 +1,6 @@
 import { Scene } from '@app/game/scene/scene';
 
+/** The game page just returns the game cabvas. */
 export default function GamePage() {
-  return (
-    <div>
-      <h1>Game page</h1>
-
-      <div>
-        <Scene />
-      </div>
-    </div>
-  );
+  return <Scene />;
 }

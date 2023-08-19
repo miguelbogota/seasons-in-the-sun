@@ -1,4 +1,10 @@
+import { type Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Seasons in the sun | Wiki',
+  description: 'Game wiki',
+};
 
 const routes = [
   {

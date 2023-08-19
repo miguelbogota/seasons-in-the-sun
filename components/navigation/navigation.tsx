@@ -1,5 +1,25 @@
 import Link from 'next/link';
 
+import { navigation } from './navigation.css';
+
+export type NavigationProps = {
+  // Empty for now.
+};
+
+export function Navigation(props: NavigationProps) {
+  const {} = props;
+
+  return (
+    <nav className={navigation}>
+      {routes.map(({ path, name }) => (
+        <Link key={path} href={path}>
+          {name}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+
 const routes = [
   {
     path: '/',
@@ -14,15 +34,3 @@ const routes = [
     name: 'Wiki',
   },
 ];
-
-export function Navigation() {
-  return (
-    <nav>
-      {routes.map(({ path, name }) => (
-        <Link key={path} href={path}>
-          {name}
-        </Link>
-      ))}
-    </nav>
-  );
-}

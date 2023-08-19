@@ -2,7 +2,9 @@
 
 exports[`Navigation Component > should match snapshot 1`] = `
 <div>
-  <nav>
+  <nav
+    class="navigation_navigation__1h4laos0"
+  >
     <a
       href="/"
     >

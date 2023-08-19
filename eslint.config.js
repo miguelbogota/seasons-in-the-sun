@@ -136,6 +136,16 @@ export default [
   },
   {
     // Ignored files settings.
-    ignores: ['node_modules', 'build', 'public', '.next', '*.ico', '*.log', '*.lock', 'generated'],
+    ignores: [
+      'node_modules',
+      'build',
+      'public',
+      '.next',
+      '*.ico',
+      '*.log',
+      '*.lock',
+      'pnpm-lock.yaml',
+      'generated',
+    ],
   },
 ];
