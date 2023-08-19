@@ -1,4 +1,5 @@
 import './reset.css';
+import '@app/module/theme/_setup.css';
 
 import { globalStyle } from '@vanilla-extract/css';
 
