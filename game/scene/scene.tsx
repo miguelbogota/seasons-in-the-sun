@@ -1,14 +1,13 @@
 'use client';
 
-import { Navigation } from '@app/components/navigation/navigation';
-import { useGameMenu } from '@app/state/game-menu';
+import { useHandleMenu } from '@app/module/game-menu';
 import { Canvas, type MeshProps, useFrame } from '@react-three/fiber';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { type Mesh } from 'three';
 
 /** Main scene to show. */
 export function Scene() {
-  const [loading, showMenu] = useHandleMenu();
+  const [loading, Menu] = useHandleMenu();
 
   if (loading) {
     return <SimpleLoading />;
@@ -16,7 +15,7 @@ export function Scene() {
 
   return (
     <>
-      {showMenu && <Navigation />}
+      <Menu />
 
       <Canvas>
         <ambientLight />
@@ -71,37 +70,4 @@ function SimpleLoading() {
       Loading...
     </div>
   );
-}
-
-/** Hook to handle the initial setup for the menu. */
-function useHandleMenu() {
-  const [loading, setLoading] = useState(true);
-  const gameMenu = useGameMenu();
-
-  useEffect(
-    () => {
-      if (gameMenu.isGameMenuOpen) {
-        gameMenu.closeGameMenu();
-      }
-
-      const handleEscape = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-          gameMenu.toggleGameMenu();
-        }
-      };
-
-      window.addEventListener('keydown', handleEscape);
-      setLoading(false);
-
-      return () => {
-        gameMenu.openGameMenu();
-        window.removeEventListener('keydown', handleEscape);
-      };
-    },
-    // Disabled since it should only run once.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  return [loading, gameMenu.isGameMenuOpen] as [loading: boolean, showMenu: boolean];
 }
