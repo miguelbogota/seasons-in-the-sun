@@ -1,4 +1,4 @@
-import { Navigation } from '@app/components/navigation/navigation';
+import { Navigation } from '@app/website/navigation';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

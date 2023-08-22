@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { useHandleMenu } from './use-handle-menu';
+import { useHandleMenu } from './use-handle-menu.hook';
 
 describe('useHandleMenu', () => {
   it('should return a loading state and a menu component', () => {

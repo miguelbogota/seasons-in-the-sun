@@ -1,6 +1,6 @@
 'use client';
 
-import { useHandleMenu } from '@app/module/game-menu';
+import { useHandleMenu } from '@app/game/menu';
 import { Canvas, type MeshProps, useFrame } from '@react-three/fiber';
 import { useRef, useState } from 'react';
 import { type Mesh } from 'three';

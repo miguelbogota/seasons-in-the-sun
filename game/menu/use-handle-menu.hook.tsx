@@ -1,7 +1,7 @@
-import { Navigation } from '@app/components/navigation/navigation';
+import { Navigation } from '@app/website/navigation/navigation.component';
 import { type FC, useEffect, useState } from 'react';
 
-import { useGameMenu } from '../store';
+import { useGameMenu } from './store';
 
 /** Hook to handle the initial setup for the menu. */
 export function useHandleMenu() {

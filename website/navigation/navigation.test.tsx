@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import { Navigation } from './navigation';
+import { Navigation } from './navigation.component';
 
 describe('Navigation Component', () => {
   it('should match snapshot', () => {
