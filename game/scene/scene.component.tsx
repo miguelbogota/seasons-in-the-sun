@@ -1,6 +1,7 @@
 'use client';
 
 import { useHandleMenu } from '@app/game/menu';
+import { theme } from '@app/theme';
 import { Canvas, type MeshProps, useFrame } from '@react-three/fiber';
 import { useRef, useState } from 'react';
 import { type Mesh } from 'three';
@@ -49,7 +50,9 @@ function Box(props: MeshProps) {
       onPointerOut={() => setHover(false)}
     >
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+      <meshStandardMaterial
+        color={hovered ? theme.palette.game('pink') : theme.palette.game('orange')}
+      />
     </mesh>
   );
 }

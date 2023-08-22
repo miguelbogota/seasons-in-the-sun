@@ -2,7 +2,7 @@ import { type ThemeDerivedSizeOption } from './utils';
 
 export class ThemeSize {
   /** Size values to use in the project. */
-  public static values = Object.freeze({
+  static values = Object.freeze({
     1: '4rem',
     2: '3rem',
     3: '2.3rem',
@@ -14,7 +14,7 @@ export class ThemeSize {
   });
 
   /** Return the value of a size using css variables. */
-  public get(size: ThemeSizeOption, config?: GetSizeConfig) {
+  get(size: ThemeSizeOption, config?: GetSizeConfig) {
     const defaultConfig: Required<GetSizeConfig> = {
       xs: 8,
       sm: 7,
@@ -29,7 +29,7 @@ export class ThemeSize {
     const { value, ...sizesPassed } = { ...defaultConfig, ...config };
 
     if (typeof size !== 'string') {
-      return this._resolveValue(size, value);
+      return this.#resolveValue(size, value);
     }
 
     const fontSize = Object.entries(sizesPassed).find(([key]) => key === size)?.[1];
@@ -38,11 +38,11 @@ export class ThemeSize {
       throw new Error(`The size "${size}" was not found.`);
     }
 
-    return this._resolveValue(fontSize, value);
+    return this.#resolveValue(fontSize, value);
   }
 
   /** Resolves the value to return in the `get` method. */
-  private _resolveValue(size: ThemeRawSizeOption, value: boolean) {
+  #resolveValue(size: ThemeRawSizeOption, value: boolean) {
     return value ? ThemeSize.values[size] : `var(--size-${size})`;
   }
 }

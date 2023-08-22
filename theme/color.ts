@@ -3,7 +3,7 @@ import { kebabCase } from 'lodash';
 /** Colors to use across all the project. */
 export class ThemeColor {
   /** Color values to use in the project. */
-  public static values = Object.freeze({
+  static values = Object.freeze({
     white: '#ffffff',
     light: '#c7c7c7',
     dark: '#4b4b4b',
@@ -43,7 +43,7 @@ export class ThemeColor {
   );
 
   /** Return the value of a color using css variables. */
-  public get(colorName: ThemeColorOption, config?: GetColorConfig) {
+  get(colorName: ThemeColorOption, config?: GetColorConfig) {
     const defaultConfig: Required<GetColorConfig> = {
       value: false,
       alpha: 1,

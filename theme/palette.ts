@@ -5,7 +5,7 @@ import { type GetColorConfig, ThemeColor, type ThemeColorOption } from './color'
 /** Palette to use across all the project. */
 export class ThemePalette {
   /** Palette values to use in the project. */
-  public static values = Object.freeze({
+  static values = Object.freeze({
     primary: 'teal',
     secondary: 'pink',
     info: 'blue',
@@ -19,7 +19,7 @@ export class ThemePalette {
   });
 
   /** Palette values to use in the project in the light theme. */
-  public static lightValues = Object.freeze({
+  static lightValues = Object.freeze({
     'text.primary': 'light',
     'text.secondary': 'scale4',
     'text.disabled': 'scale3',
@@ -29,7 +29,7 @@ export class ThemePalette {
   });
 
   /** Palette values to use in the project in the dark theme. */
-  public static darkValues = Object.freeze({
+  static darkValues = Object.freeze({
     'text.primary': 'dark',
     'text.secondary': 'scale4',
     'text.disabled': 'scale5',
@@ -39,7 +39,7 @@ export class ThemePalette {
   });
 
   /** Global variables to pass the css engine. */
-  public static vars = Object.fromEntries(
+  static vars = Object.fromEntries(
     Object.entries(ThemePalette.values).map(([key, value]) => [
       `--${kebabCase(key)}`,
       `var(--${value})`,
@@ -47,7 +47,7 @@ export class ThemePalette {
   );
 
   /** Global light variables to pass the css engine. */
-  public static lightVars = Object.fromEntries(
+  static lightVars = Object.fromEntries(
     Object.entries(ThemePalette.lightValues).map(([key, value]) => [
       `--${kebabCase(key)}`,
       `var(--${value})`,
@@ -55,7 +55,7 @@ export class ThemePalette {
   );
 
   /** Global dark variables to pass the css engine. */
-  public static darkVars = Object.fromEntries(
+  static darkVars = Object.fromEntries(
     Object.entries(ThemePalette.darkValues).map(([key, value]) => [
       `--${kebabCase(key)}`,
       `var(--${value})`,
@@ -66,7 +66,7 @@ export class ThemePalette {
   private _colors = new ThemeColor();
 
   /** Return the value of a color/palette using css variables. */
-  public get(colorName: ThemeFullColorOption, config?: GetColorConfig) {
+  get(colorName: ThemeFullColorOption, config?: GetColorConfig) {
     const defaultConfig: Required<GetColorConfig> = {
       value: false,
       alpha: 1,
@@ -75,7 +75,7 @@ export class ThemePalette {
     const { value, alpha } = { ...defaultConfig, ...config };
 
     if (alpha !== 1) {
-      const color = value ? this._resolveColorValue(colorName) : `var(--${kebabCase(colorName)})`;
+      const color = value ? this.#resolveValue(colorName) : `var(--${kebabCase(colorName)})`;
 
       const colorStrength = 100 - alpha * 100;
       const transparentStrength = alpha * 100;
@@ -83,13 +83,19 @@ export class ThemePalette {
     }
 
     if (value) {
-      return this._resolveColorValue(colorName);
+      return this.#resolveValue(colorName);
     }
 
     return `var(--${kebabCase(colorName)})`;
   }
 
-  private _resolveColorValue(colorName: ThemeFullColorOption) {
+  /** Returns the value of the color/palette optimized for three.js (Just the value). */
+  three(colorName: ThemeFullColorOption) {
+    return this.#resolveValue(colorName, true);
+  }
+
+  /** Resolves the value to return in the `get` method. */
+  #resolveValue(colorName: ThemeFullColorOption, ignoreDarkMode = false) {
     if (colorName in ThemeColor.values) {
       return this._colors.get(colorName as ThemeColorOption, { value: true });
     }
@@ -100,7 +106,7 @@ export class ThemePalette {
       return this._colors.get(color as ThemeColorOption, { value: true });
     }
 
-    const isDarkMode = this._isClientDarkMode();
+    const isDarkMode = ignoreDarkMode ? false : this.#isClientDarkMode();
 
     if (isDarkMode && colorName in ThemePalette.darkValues) {
       const key = colorName as keyof typeof ThemePalette.darkValues;
@@ -115,7 +121,8 @@ export class ThemePalette {
     }
   }
 
-  private _isClientDarkMode() {
+  /** Returns if the client is in dark mode. */
+  #isClientDarkMode() {
     return typeof window !== 'undefined'
       ? window.matchMedia('(prefers-color-scheme: dark)').matches
       : false;

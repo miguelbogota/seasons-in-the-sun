@@ -7,7 +7,7 @@ export class ThemeBreakpoint {
    * The breakpoint **start** at this value.
    * For instance with the first breakpoint xs: [xs, sm).
    */
-  public static values = Object.freeze({
+  static values = Object.freeze({
     /** Phone. */
     xs: 0,
     /** Tablet. */
@@ -23,13 +23,13 @@ export class ThemeBreakpoint {
   } as Record<ThemeBreakpointOption, number>);
 
   /** Keys of the breakpoints. */
-  private _keys = Object.keys(ThemeBreakpoint.values) as ThemeBreakpointOption[];
+  #keys = Object.keys(ThemeBreakpoint.values) as ThemeBreakpointOption[];
 
   /**
    * Returns a media query string which matches screen widths greater than the screen size given by
    * the breakpoint key (inclusive).
    */
-  public up(key: ThemeBreakpointOption) {
+  up(key: ThemeBreakpointOption) {
     const value = typeof key === 'string' ? ThemeBreakpoint.values[key] : key;
     return `(min-width: ${value}px)`;
   }
@@ -38,7 +38,7 @@ export class ThemeBreakpoint {
    * Returns a media query string which matches screen widths less than the screen size given by the
    * breakpoint key (exclusive).
    */
-  public down(key: ThemeBreakpointOption) {
+  down(key: ThemeBreakpointOption) {
     const value = typeof key === 'string' ? ThemeBreakpoint.values[key] : key;
     return `(max-width: ${value - 1}px)`;
   }
@@ -48,7 +48,7 @@ export class ThemeBreakpoint {
    * the breakpoint key in the first argument (inclusive) and less than the screen size given by the
    * breakpoint key in the second argument (exclusive).
    */
-  public between(start: ThemeBreakpointOption, end: ThemeBreakpointOption) {
+  between(start: ThemeBreakpointOption, end: ThemeBreakpointOption) {
     const startValue = typeof start === 'string' ? ThemeBreakpoint.values[start] : start;
     const endValue = typeof end === 'string' ? ThemeBreakpoint.values[end] : end;
 
@@ -66,15 +66,15 @@ export class ThemeBreakpoint {
    * the breakpoint key (inclusive) and stopping at the screen size given by the next breakpoint
    * key (exclusive).
    */
-  public only(key: ThemeBreakpointOption) {
+  only(key: ThemeBreakpointOption) {
     const isNumber = typeof key === 'number';
 
     if (isNumber) {
       return this.between(key, key + 2);
     }
 
-    if (this._keys.indexOf(key) + 1 < this._keys.length) {
-      return this.between(key, this._keys[this._keys.indexOf(key) + 1]);
+    if (this.#keys.indexOf(key) + 1 < this.#keys.length) {
+      return this.between(key, this.#keys[this.#keys.indexOf(key) + 1]);
     }
 
     return this.up(key);
@@ -85,23 +85,23 @@ export class ThemeBreakpoint {
    * the breakpoint key (exclusive) and starting at the screen size given by the next breakpoint
    * key (inclusive).
    */
-  public not(key: ThemeBreakpointOption) {
+  not(key: ThemeBreakpointOption) {
     const isNumber = typeof key === 'number';
 
     if (isNumber) {
       return 'not all and ' + this.between(key - 1, key + 1);
     }
 
-    const keyIndex = this._keys.indexOf(key);
+    const keyIndex = this.#keys.indexOf(key);
 
     if (keyIndex === 0) {
-      return this.up(this._keys[1]);
+      return this.up(this.#keys[1]);
     }
-    if (keyIndex === this._keys.length - 1) {
-      return this.down(this._keys[keyIndex]);
+    if (keyIndex === this.#keys.length - 1) {
+      return this.down(this.#keys[keyIndex]);
     }
 
-    return 'not all and ' + this.between(key, this._keys[this._keys.indexOf(key) + 1]);
+    return 'not all and ' + this.between(key, this.#keys[this.#keys.indexOf(key) + 1]);
   }
 }
 

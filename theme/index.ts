@@ -12,7 +12,9 @@ export const theme = Object.freeze({
   },
   get palette() {
     const palette = new ThemePalette();
-    return palette.get;
+    return Object.assign(palette.get.bind(palette), {
+      game: palette.three.bind(palette),
+    });
   },
 });
 
