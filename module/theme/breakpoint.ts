@@ -1,3 +1,5 @@
+import { type ThemeDerivedSizeOption } from './utils';
+
 /** Breakpoints to use across all the project. */
 export class ThemeBreakpoint {
   /**
@@ -16,10 +18,12 @@ export class ThemeBreakpoint {
     lg: 1200,
     /** Large Screen. */
     xl: 1530,
-  });
+    /** Extra Large Screen. */
+    xxl: 1800,
+  } as Record<ThemeBreakpointOption, number>);
 
   /** Keys of the breakpoints. */
-  private keys = Object.keys(ThemeBreakpoint.values) as ThemeBreakpointOption[];
+  private _keys = Object.keys(ThemeBreakpoint.values) as ThemeBreakpointOption[];
 
   /**
    * Returns a media query string which matches screen widths greater than the screen size given by
@@ -69,8 +73,8 @@ export class ThemeBreakpoint {
       return this.between(key, key + 2);
     }
 
-    if (this.keys.indexOf(key) + 1 < this.keys.length) {
-      return this.between(key, this.keys[this.keys.indexOf(key) + 1]);
+    if (this._keys.indexOf(key) + 1 < this._keys.length) {
+      return this.between(key, this._keys[this._keys.indexOf(key) + 1]);
     }
 
     return this.up(key);
@@ -88,20 +92,20 @@ export class ThemeBreakpoint {
       return 'not all and ' + this.between(key - 1, key + 1);
     }
 
-    const keyIndex = this.keys.indexOf(key);
+    const keyIndex = this._keys.indexOf(key);
 
     if (keyIndex === 0) {
-      return this.up(this.keys[1]);
+      return this.up(this._keys[1]);
     }
-    if (keyIndex === this.keys.length - 1) {
-      return this.down(this.keys[keyIndex]);
+    if (keyIndex === this._keys.length - 1) {
+      return this.down(this._keys[keyIndex]);
     }
 
-    return 'not all and ' + this.between(key, this.keys[this.keys.indexOf(key) + 1]);
+    return 'not all and ' + this.between(key, this._keys[this._keys.indexOf(key) + 1]);
   }
 }
 
 /**
  * Values that can be use as a breakpoint, you can also use numbers to use a customer breakpoint.
  */
-export type ThemeBreakpointOption = keyof typeof ThemeBreakpoint.values | number;
+export type ThemeBreakpointOption = ThemeDerivedSizeOption | number;

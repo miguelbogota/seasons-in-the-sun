@@ -63,7 +63,7 @@ export class ThemePalette {
   );
 
   /** Base colors. */
-  private colors = new ThemeColor();
+  private _colors = new ThemeColor();
 
   /** Return the value of a color/palette using css variables. */
   public get(colorName: ThemeFullColorOption, config?: GetColorConfig) {
@@ -75,7 +75,7 @@ export class ThemePalette {
     const { value, alpha } = { ...defaultConfig, ...config };
 
     if (alpha !== 1) {
-      const color = value ? this.resolveColorValue(colorName) : `var(--${kebabCase(colorName)})`;
+      const color = value ? this._resolveColorValue(colorName) : `var(--${kebabCase(colorName)})`;
 
       const colorStrength = 100 - alpha * 100;
       const transparentStrength = alpha * 100;
@@ -83,39 +83,39 @@ export class ThemePalette {
     }
 
     if (value) {
-      return this.resolveColorValue(colorName);
+      return this._resolveColorValue(colorName);
     }
 
     return `var(--${kebabCase(colorName)})`;
   }
 
-  private resolveColorValue(colorName: ThemeFullColorOption) {
+  private _resolveColorValue(colorName: ThemeFullColorOption) {
     if (colorName in ThemeColor.values) {
-      return this.colors.get(colorName as ThemeColorOption, { value: true });
+      return this._colors.get(colorName as ThemeColorOption, { value: true });
     }
 
     if (colorName in ThemePalette.values) {
       const key = colorName as keyof typeof ThemePalette.values;
       const color = ThemePalette.values[key];
-      return this.colors.get(color as ThemeColorOption, { value: true });
+      return this._colors.get(color as ThemeColorOption, { value: true });
     }
 
-    const isDarkMode = this.isClientDarkMode();
+    const isDarkMode = this._isClientDarkMode();
 
     if (isDarkMode && colorName in ThemePalette.darkValues) {
       const key = colorName as keyof typeof ThemePalette.darkValues;
       const color = ThemePalette.darkValues[key];
-      return this.colors.get(color as ThemeColorOption, { value: true });
+      return this._colors.get(color as ThemeColorOption, { value: true });
     }
 
     if (!isDarkMode && colorName in ThemePalette.lightValues) {
       const key = colorName as keyof typeof ThemePalette.lightValues;
       const color = ThemePalette.lightValues[key];
-      return this.colors.get(color as ThemeColorOption, { value: true });
+      return this._colors.get(color as ThemeColorOption, { value: true });
     }
   }
 
-  private isClientDarkMode() {
+  private _isClientDarkMode() {
     return typeof window !== 'undefined'
       ? window.matchMedia('(prefers-color-scheme: dark)').matches
       : false;

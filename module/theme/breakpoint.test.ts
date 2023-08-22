@@ -49,7 +49,7 @@ describe('ThemeBreakpoint', () => {
     expect(breakpoint.only('lg')).toBe(
       `(min-width: ${value('lg')}px) and (max-width:${value('xl') - 1}px)`,
     );
-    expect(breakpoint.only('xl')).toBe(`(min-width: ${value('xl')}px)`);
+    expect(breakpoint.only('xxl')).toBe(`(min-width: ${value('xxl')}px)`);
     expect(breakpoint.only(300)).toBe(
       `(min-width: ${value(300)}px) and (max-width:${value(300) + 1}px)`,
     );
@@ -65,7 +65,7 @@ describe('ThemeBreakpoint', () => {
     expect(breakpoint.not('lg')).toBe(
       `not all and (min-width: ${value('lg')}px) and (max-width:${value('xl') - 1}px)`,
     );
-    expect(breakpoint.not('xl')).toBe(`(max-width: ${value('xl') - 1}px)`);
+    expect(breakpoint.not('xxl')).toBe(`(max-width: ${value('xxl') - 1}px)`);
     expect(breakpoint.not(300)).toBe(
       `not all and (min-width: ${value(300) - 1}px) and (max-width:${value(300)}px)`,
     );
