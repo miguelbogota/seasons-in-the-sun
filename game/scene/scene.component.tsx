@@ -3,17 +3,17 @@
 import { useHandleMenu } from '@app/game/menu';
 import { theme } from '@app/theme';
 import {
+  Box,
   KeyboardControls,
-  type KeyboardControlsEntry,
-  PerspectiveCamera,
   Plane,
   PointerLockControls,
+  Sky,
   useKeyboardControls,
 } from '@react-three/drei';
-import { Canvas, type MeshProps, useFrame } from '@react-three/fiber';
-import { Physics, type RapierRigidBody, RigidBody } from '@react-three/rapier';
-import { type PropsWithChildren, Suspense, useMemo, useRef, useState } from 'react';
-import { type Mesh } from 'three';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { CapsuleCollider, Physics, type RapierRigidBody, RigidBody } from '@react-three/rapier';
+import { type ComponentProps, type PropsWithChildren, useRef, useState } from 'react';
+import { type Mesh, Vector3 } from 'three';
 
 /** Main scene to show. */
 export function Scene() {
@@ -29,20 +29,20 @@ export function Scene() {
 
       <GameKeyboardControls>
         <Canvas camera={{ position: [0, 5, 10] }}>
+          <Sky sunPosition={[100, 20, 100]} />
           <ambientLight intensity={0.5} />
           <directionalLight position={[2, 5, 5]} intensity={0.5} castShadow />
 
-          <Suspense>
-            <Physics debug>
-              <Box position={[-1.2, 4, 0]} />
+          <Physics gravity={[0, -30, 0]} debug>
+            {[0, 1.5, 3, 4.5, 6, 7.5].map((v) => (
+              <SimpleBox key={v} position={[v, 4, -15]} />
+            ))}
 
-              <Box position={[1.2, 4, 0]} />
+            <Ground />
+            <Player />
+          </Physics>
 
-              <Ground />
-
-              <Player />
-            </Physics>
-          </Suspense>
+          <PointerLockControls />
         </Canvas>
       </GameKeyboardControls>
     </>
@@ -50,14 +50,14 @@ export function Scene() {
 }
 
 /** Testing Box component to show while testing. */
-function Box(props: MeshProps) {
+function SimpleBox(props: ComponentProps<typeof Box>) {
   const meshRef = useRef<Mesh>(null);
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
 
   return (
     <RigidBody colliders="cuboid">
-      <mesh
+      <Box
         {...props}
         ref={meshRef}
         scale={active ? 1.5 : 1}
@@ -69,7 +69,7 @@ function Box(props: MeshProps) {
         <meshStandardMaterial
           color={hovered ? theme.palette.game('pink') : theme.palette.game('orange')}
         />
-      </mesh>
+      </Box>
     </RigidBody>
   );
 }
@@ -77,79 +77,91 @@ function Box(props: MeshProps) {
 /** Ground being used. */
 function Ground() {
   return (
-    <RigidBody colliders="cuboid">
-      <Plane rotation={[-Math.PI / 2, 0, 0]} args={[100, 100]}>
+    <RigidBody type="fixed">
+      <Plane rotation={[-Math.PI / 2, 0, 0]} args={[200, 200]}>
         <meshPhysicalMaterial attach="material" color={theme.palette.game('green')} />
       </Plane>
     </RigidBody>
   );
 }
 
-/** First person camera is added to the player. */
-const MyCamera = () => (
-  <PerspectiveCamera fov={75} rotation={[0, Math.PI, 0]} makeDefault={true} position={[0, 0.5, 0]}>
-    <PointerLockControls />
-  </PerspectiveCamera>
-);
+const SPEED = 6;
+const direction = new Vector3();
+const frontVector = new Vector3();
+const sideVector = new Vector3();
 
 /** Testing basic player. */
 function Player() {
-  const playerRef = useRef<Mesh>(null);
   const rigidBodyRef = useRef<RapierRigidBody>(null);
+  const isOnGround = useRef(false);
+  const { camera } = useThree();
+  const [, get] = useKeyboardControls<Controls>();
 
-  const forwardPressed = useKeyboardControls<Controls>((state) => state.forward);
-  const backPressed = useKeyboardControls<Controls>((state) => state.back);
-  const leftPressed = useKeyboardControls<Controls>((state) => state.left);
-  const rightPressed = useKeyboardControls<Controls>((state) => state.right);
-  const jumpPressed = useKeyboardControls<Controls>((state) => state.jump);
+  useFrame(() => {
+    const { forward, backward, left, right, jump } = get();
+    const velocity = rigidBodyRef.current?.linvel();
 
-  useFrame((_, delta) => {
-    if (!playerRef.current || !rigidBodyRef.current) {
-      return;
-    }
+    // update camera
+    const newCamera = rigidBodyRef.current?.translation();
+    newCamera && camera.position.set(newCamera.x, newCamera.y, newCamera.z);
 
-    playerRef.current.position.z -= forwardPressed ? delta * 2 : 0;
-    playerRef.current.position.z += backPressed ? delta * 2 : 0;
-    playerRef.current.position.x -= leftPressed ? delta * 2 : 0;
-    playerRef.current.position.x += rightPressed ? delta * 2 : 0;
+    // movement
+    frontVector.set(0, 0, (backward ? 1 : 0) - (forward ? 1 : 0));
+    sideVector.set((left ? 1 : 0) - (right ? 1 : 0), 0, 0);
+    direction
+      .subVectors(frontVector, sideVector)
+      .normalize()
+      .multiplyScalar(SPEED)
+      .applyEuler(camera.rotation);
 
-    if (jumpPressed) {
-      const jump = 1;
-      rigidBodyRef.current.applyImpulse({ x: 0, y: jump, z: 0 }, true);
-      rigidBodyRef.current.applyImpulse({ x: 0, y: jump * 0.5 * -1, z: 0 }, true);
+    rigidBodyRef.current?.setLinvel({ x: direction.x, y: velocity?.y ?? 0, z: direction.z }, true);
+
+    // jumping
+    if (isOnGround.current && jump) {
+      const jumpHeight = 8;
+      const jumpPull = jumpHeight * 0.8;
+      rigidBodyRef.current?.applyImpulse({ x: 0, y: jumpHeight, z: 0 }, true);
+      rigidBodyRef.current?.applyImpulse({ x: 0, y: jumpPull, z: 0 }, true);
+      isOnGround.current = false;
     }
   });
 
   return (
-    <RigidBody ref={rigidBodyRef}>
-      <mesh ref={playerRef} position={[0, 0.5, 0]} castShadow>
-        <MyCamera />
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial attach="material" color="blue" />
-      </mesh>
+    <RigidBody
+      ref={rigidBodyRef}
+      colliders={false}
+      mass={1}
+      type="dynamic"
+      position={[0, 2, 0]}
+      enabledRotations={[false, false, false]}
+      onCollisionEnter={() => {
+        isOnGround.current = true;
+      }}
+    >
+      <CapsuleCollider args={[0.75, 0.5]} />
     </RigidBody>
   );
 }
 
-type Controls = 'forward' | 'back' | 'left' | 'right' | 'jump' | 'couch';
+type Controls = 'forward' | 'backward' | 'left' | 'right' | 'jump';
 
 /** Keyboard controls for the game. */
 function GameKeyboardControls(props: PropsWithChildren) {
   const { children } = props;
 
-  const map = useMemo<KeyboardControlsEntry<Controls>[]>(
-    () => [
-      { name: 'forward', keys: ['KeyW'] },
-      { name: 'back', keys: ['KeyS'] },
-      { name: 'left', keys: ['KeyA'] },
-      { name: 'right', keys: ['KeyD'] },
-      { name: 'jump', keys: ['Space'] },
-      { name: 'couch', keys: ['ShiftLeft'] },
-    ],
-    [],
+  return (
+    <KeyboardControls
+      map={[
+        { name: 'forward', keys: ['KeyW'] },
+        { name: 'backward', keys: ['KeyS'] },
+        { name: 'left', keys: ['KeyA'] },
+        { name: 'right', keys: ['KeyD'] },
+        { name: 'jump', keys: ['Space'] },
+      ]}
+    >
+      {children}
+    </KeyboardControls>
   );
-
-  return <KeyboardControls map={map}>{children}</KeyboardControls>;
 }
 
 /** Simple loading component to show while loading. */
