@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Website / Navigation / Component > should match snapshot 1`] = `
+<div>
+  <nav
+    class="navigation_navigation__hx5tsf0"
+  >
+    <a
+      href="/"
+    >
+      Game
+    </a>
+    <a
+      href="/blog"
+    >
+      Blog
+    </a>
+    <a
+      href="/wiki"
+    >
+      Wiki
+    </a>
+  </nav>
+</div>
+`;

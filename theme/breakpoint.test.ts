@@ -1,6 +1,6 @@
 import { ThemeBreakpoint, type ThemeBreakpointOption } from './breakpoint';
 
-describe('ThemeBreakpoint', () => {
+describe('Theme / ThemeBreakpoint', () => {
   const breakpoint = new ThemeBreakpoint();
 
   it('should match `up` queries (inclusive)', () => {

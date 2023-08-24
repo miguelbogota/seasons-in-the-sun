@@ -1,6 +1,6 @@
 import { ThemePalette } from './palette';
 
-describe('ThemePalette', () => {
+describe('Theme / ThemePalette', () => {
   const palette = new ThemePalette();
 
   it('should return the value of a palette/color using css variables', () => {

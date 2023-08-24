@@ -1,7 +1,7 @@
 'use client';
 
+import { GameMenu, useGameMenuState } from '@app/game/menu';
 import { theme } from '@app/theme';
-import { Navigation } from '@app/website/navigation';
 import {
   Box,
   KeyboardControls,
@@ -15,22 +15,6 @@ import { CapsuleCollider, Physics, type RapierRigidBody, RigidBody } from '@reac
 import { type ComponentProps, type PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { type Mesh, Vector3 } from 'three';
 import { type PointerLockControls as PointerLockControlsImpl } from 'three-stdlib';
-import { create as createStore } from 'zustand';
-
-/**
- * Game menu state using zustand.
- */
-const useGameMenu = createStore<{
-  isOpen: boolean;
-  open: () => void;
-  close: () => void;
-  toggle: () => void;
-}>((set) => ({
-  isOpen: true,
-  open: () => set(() => ({ isOpen: true })),
-  close: () => set(() => ({ isOpen: false })),
-  toggle: () => set((state) => ({ isOpen: !state.isOpen })),
-}));
 
 /**
  * Main scene to show.
@@ -192,70 +176,21 @@ function GameKeyboardControls(props: PropsWithChildren) {
 function GamePointerLockControls() {
   const controlsRef = useRef<PointerLockControlsImpl>(null);
 
-  const closeGameMenu = useGameMenu((state) => state.close);
-  const openGameMenu = useGameMenu((state) => state.open);
+  const close = useGameMenuState((state) => state.close);
+  const open = useGameMenuState((state) => state.open);
+  const selector = useGameMenuState((state) => state.selector);
 
-  useEffect(
-    () => {
-      const { current: controls } = controlsRef;
+  useEffect(() => {
+    const { current: controls } = controlsRef;
 
-      controls?.addEventListener('lock', () => closeGameMenu());
-      controls?.addEventListener('unlock', () => openGameMenu());
+    controls?.addEventListener('lock', () => close());
+    controls?.addEventListener('unlock', () => open());
 
-      return () => {
-        controls?.removeEventListener('lock', () => null);
-        controls?.removeEventListener('unlock', () => null);
-      };
-    },
-    // Disabled since it should only run once.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [controlsRef],
-  );
+    return () => {
+      controls?.removeEventListener('lock', () => null);
+      controls?.removeEventListener('unlock', () => null);
+    };
+  }, [controlsRef, close, open]);
 
-  return <PointerLockControls ref={controlsRef} selector="#play-button" />;
-}
-
-/**
- * Game menu to show when the esc key is pressed (Or when the lock API from the PointerLockControls
- * gets triggered).
- */
-function GameMenu() {
-  const isOpen = useGameMenu((state) => state.isOpen);
-  return (
-    <div
-      style={{
-        display: isOpen ? 'block' : 'none',
-      }}
-    >
-      <Navigation />
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 90,
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: theme.palette('background.sheet', { alpha: 0.5 }),
-        }}
-      >
-        <button
-          id="play-button"
-          style={{
-            padding: '2rem',
-            backgroundColor: theme.palette('primary'),
-            cursor: 'pointer',
-            borderRadius: 5,
-          }}
-        >
-          Click to play
-        </button>
-      </div>
-    </div>
-  );
+  return <PointerLockControls ref={controlsRef} selector={selector(true)} />;
 }

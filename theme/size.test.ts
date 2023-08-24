@@ -1,6 +1,6 @@
 import { ThemeSize } from './size';
 
-describe('ThemeSize', () => {
+describe('Theme / ThemeSize', () => {
   const size = new ThemeSize();
 
   it('should return the value of a size using css variables', () => {

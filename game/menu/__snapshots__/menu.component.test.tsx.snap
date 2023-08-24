@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Game / Menu / Component > should match snapshot 1`] = `
+<div>
+  <div
+    style="display: block;"
+  >
+    <nav
+      class="navigation_navigation__hx5tsf0"
+    >
+      <a
+        href="/"
+      >
+        Game
+      </a>
+      <a
+        href="/blog"
+      >
+        Blog
+      </a>
+      <a
+        href="/wiki"
+      >
+        Wiki
+      </a>
+    </nav>
+    <div
+      style="position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px; z-index: 90; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center;"
+    >
+      <button
+        id="play-button"
+        style="padding: 2rem; cursor: pointer; border-radius: 5px;"
+      >
+        Click to play
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -1,6 +1,6 @@
 import { ThemeColor } from './color';
 
-describe('ThemeColor', () => {
+describe('Theme / ThemeColor', () => {
   const color = new ThemeColor();
 
   it('should return the value of a color using css variables', () => {
