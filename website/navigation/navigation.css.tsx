@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css';
 
 export const navigation = style({
   position: 'fixed',
-  zIndex: 1,
+  zIndex: 100,
   top: 0,
   right: 0,
   padding: '1rem',

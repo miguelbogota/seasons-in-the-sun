@@ -21,21 +21,21 @@ export class ThemePalette {
   /** Palette values to use in the project in the light theme. */
   static lightValues = Object.freeze({
     'text.primary': 'light',
-    'text.secondary': 'scale4',
-    'text.disabled': 'scale3',
+    'text.secondary': 'scale-4',
+    'text.disabled': 'scale-3',
     'text.inverted': 'dark',
     'background.main': 'white',
-    'background.sheet': 'scale1',
+    'background.sheet': 'scale-1',
   });
 
   /** Palette values to use in the project in the dark theme. */
   static darkValues = Object.freeze({
     'text.primary': 'dark',
-    'text.secondary': 'scale4',
-    'text.disabled': 'scale5',
+    'text.secondary': 'scale-4',
+    'text.disabled': 'scale-5',
     'text.inverted': 'light',
     'background.main': 'black',
-    'background.sheet': 'scale7',
+    'background.sheet': 'scale-7',
   });
 
   /** Global variables to pass the css engine. */

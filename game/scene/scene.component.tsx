@@ -1,7 +1,7 @@
 'use client';
 
-import { useHandleMenu } from '@app/game/menu';
 import { theme } from '@app/theme';
+import { Navigation } from '@app/website/navigation';
 import {
   Box,
   KeyboardControls,
@@ -12,28 +12,42 @@ import {
 } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { CapsuleCollider, Physics, type RapierRigidBody, RigidBody } from '@react-three/rapier';
-import { type ComponentProps, type PropsWithChildren, useRef, useState } from 'react';
+import { type ComponentProps, type PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { type Mesh, Vector3 } from 'three';
+import { type PointerLockControls as PointerLockControlsImpl } from 'three-stdlib';
+import { create as createStore } from 'zustand';
 
-/** Main scene to show. */
+/**
+ * Game menu state using zustand.
+ */
+const useGameMenu = createStore<{
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
+}>((set) => ({
+  isOpen: true,
+  open: () => set(() => ({ isOpen: true })),
+  close: () => set(() => ({ isOpen: false })),
+  toggle: () => set((state) => ({ isOpen: !state.isOpen })),
+}));
+
+/**
+ * Main scene to show.
+ */
 export function Scene() {
-  const [loading, Menu] = useHandleMenu();
-
-  if (loading) {
-    return <SimpleLoading />;
-  }
-
   return (
     <>
-      <Menu />
+      <GameMenu />
 
       <GameKeyboardControls>
-        <Canvas camera={{ position: [0, 5, 10] }}>
+        <Canvas>
+          <GamePointerLockControls />
           <Sky sunPosition={[100, 20, 100]} />
           <ambientLight intensity={0.5} />
           <directionalLight position={[2, 5, 5]} intensity={0.5} castShadow />
 
-          <Physics gravity={[0, -30, 0]} debug>
+          <Physics gravity={[0, -30, 0]}>
             {[0, 1.5, 3, 4.5, 6, 7.5].map((v) => (
               <SimpleBox key={v} position={[v, 4, -15]} />
             ))}
@@ -41,15 +55,15 @@ export function Scene() {
             <Ground />
             <Player />
           </Physics>
-
-          <PointerLockControls />
         </Canvas>
       </GameKeyboardControls>
     </>
   );
 }
 
-/** Testing Box component to show while testing. */
+/**
+ * Testing Box component to show while testing.
+ */
 function SimpleBox(props: ComponentProps<typeof Box>) {
   const meshRef = useRef<Mesh>(null);
   const [hovered, setHover] = useState(false);
@@ -74,7 +88,9 @@ function SimpleBox(props: ComponentProps<typeof Box>) {
   );
 }
 
-/** Ground being used. */
+/**
+ * Simple ground being used.
+ */
 function Ground() {
   return (
     <RigidBody type="fixed">
@@ -85,13 +101,15 @@ function Ground() {
   );
 }
 
-const SPEED = 6;
-const direction = new Vector3();
-const frontVector = new Vector3();
-const sideVector = new Vector3();
-
-/** Testing basic player. */
+/**
+ * Testing player very simple.
+ */
 function Player() {
+  const SPEED = 6;
+  const direction = new Vector3();
+  const frontVector = new Vector3();
+  const sideVector = new Vector3();
+
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const isOnGround = useRef(false);
   const { camera } = useThree();
@@ -138,14 +156,18 @@ function Player() {
         isOnGround.current = true;
       }}
     >
-      <CapsuleCollider args={[0.75, 0.5]} />
+      <Box>
+        <CapsuleCollider args={[0.75, 0.5]} />
+      </Box>
     </RigidBody>
   );
 }
 
 type Controls = 'forward' | 'backward' | 'left' | 'right' | 'jump';
 
-/** Keyboard controls for the game. */
+/**
+ * Keyboard controls for the game mapped.
+ */
 function GameKeyboardControls(props: PropsWithChildren) {
   const { children } = props;
 
@@ -164,20 +186,76 @@ function GameKeyboardControls(props: PropsWithChildren) {
   );
 }
 
-/** Simple loading component to show while loading. */
-function SimpleLoading() {
+/**
+ * Controls with the lock API opening and closing the game menu.
+ */
+function GamePointerLockControls() {
+  const controlsRef = useRef<PointerLockControlsImpl>(null);
+
+  const closeGameMenu = useGameMenu((state) => state.close);
+  const openGameMenu = useGameMenu((state) => state.open);
+
+  useEffect(
+    () => {
+      const { current: controls } = controlsRef;
+
+      controls?.addEventListener('lock', () => closeGameMenu());
+      controls?.addEventListener('unlock', () => openGameMenu());
+
+      return () => {
+        controls?.removeEventListener('lock', () => null);
+        controls?.removeEventListener('unlock', () => null);
+      };
+    },
+    // Disabled since it should only run once.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [controlsRef],
+  );
+
+  return <PointerLockControls ref={controlsRef} selector="#play-button" />;
+}
+
+/**
+ * Game menu to show when the esc key is pressed (Or when the lock API from the PointerLockControls
+ * gets triggered).
+ */
+function GameMenu() {
+  const isOpen = useGameMenu((state) => state.isOpen);
   return (
     <div
       style={{
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '4rem',
+        display: isOpen ? 'block' : 'none',
       }}
     >
-      LOADING...
+      <Navigation />
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 90,
+          width: '100vw',
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: theme.palette('background.sheet', { alpha: 0.5 }),
+        }}
+      >
+        <button
+          id="play-button"
+          style={{
+            padding: '2rem',
+            backgroundColor: theme.palette('primary'),
+            cursor: 'pointer',
+            borderRadius: 5,
+          }}
+        >
+          Click to play
+        </button>
+      </div>
     </div>
   );
 }
