@@ -70,10 +70,28 @@ describe('Theme / ThemeBreakpoint', () => {
       `not all and (min-width: ${value(300) - 1}px) and (max-width:${value(300)}px)`,
     );
   });
+
+  it('should allow custom breakpoints', () => {
+    const customBreakpoint = new ThemeBreakpoint({
+      values: {
+        xs: 0,
+        sm: 0,
+        md: 0,
+        lg: 0,
+        xl: 0,
+        xxl: 0,
+      },
+    });
+
+    expect(customBreakpoint.up('sm')).toBe('(min-width: 0px)');
+    expect(customBreakpoint.down('md')).toBe('(max-width: -1px)');
+  });
 });
 
 function value(breakpoint: ThemeBreakpointOption, exclusive = false) {
   const isBreakpointString = typeof breakpoint === 'string';
-  const breakpointValue = isBreakpointString ? ThemeBreakpoint.values[breakpoint] : breakpoint;
+  const breakpointValue = isBreakpointString
+    ? new ThemeBreakpoint().values[breakpoint]
+    : breakpoint;
   return breakpointValue - (exclusive ? 1 : 0);
 }

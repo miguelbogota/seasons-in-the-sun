@@ -22,4 +22,18 @@ describe('Theme / ThemeColor', () => {
     const colorVale = color.get('green', { value: true, alpha: 0.5 });
     expect(colorVale).toBe('color-mix(in srgb, #388e3c 50%, transparent 50%)');
   });
+
+  it('should allow  custom colors', () => {
+    const customColor = new ThemeColor({
+      values: {
+        green: '#00ff00',
+      },
+    });
+
+    const colorVale = customColor.get('green');
+    expect(colorVale).toBe('var(--green)');
+
+    const colorVale2 = customColor.get('green', { value: true });
+    expect(colorVale2).toBe('#00ff00');
+  });
 });

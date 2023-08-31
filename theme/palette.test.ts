@@ -1,7 +1,18 @@
+import { MatchMediaMock } from '@app/testing/mocks/matchmedia.mock';
+
 import { ThemePalette } from './palette';
 
 describe('Theme / ThemePalette', () => {
   const palette = new ThemePalette();
+  const matchMediaMock = new MatchMediaMock();
+
+  afterEach(() => {
+    matchMediaMock.clear();
+  });
+
+  afterAll(() => {
+    matchMediaMock.destroy();
+  });
 
   it('should return the value of a palette/color using css variables', () => {
     const color1 = palette.get('primary');
@@ -33,5 +44,15 @@ describe('Theme / ThemePalette', () => {
 
     const color2 = palette.get('white', { value: true, alpha: 0.5 });
     expect(color2).toBe('color-mix(in srgb, #ffffff 50%, transparent 50%)');
+  });
+
+  it('should return the right value with the user mode', () => {
+    const color1 = palette.get('text.primary', { value: true });
+    expect(color1).toBe('#c7c7c7');
+
+    matchMediaMock.useMediaQuery('(prefers-color-scheme: dark)');
+
+    const color2 = palette.get('text.primary', { value: true });
+    expect(color2).toBe('#4b4b4b');
   });
 });

@@ -2,8 +2,20 @@ import { kebabCase } from 'lodash';
 
 /** Colors to use across all the project. */
 export class ThemeColor {
-  /** Color values to use in the project. */
-  static values = Object.freeze({
+  constructor(
+    /** Custom values for the colors. */
+    _customValues?: CustomThemeColor,
+  ) {
+    this.values = { ...ThemeColor.defaultValues, ..._customValues?.values };
+    this.vars = Object.fromEntries(
+      Object.entries(this.values).map(([key, value]) => [`--${kebabCase(key)}`, value]),
+    );
+  }
+
+  /**
+   * Default values for the colors.
+   */
+  static defaultValues = {
     white: '#ffffff',
     light: '#c7c7c7',
     dark: '#4b4b4b',
@@ -35,14 +47,21 @@ export class ThemeColor {
     grey: '#616161',
     bluegrey: '#455a64',
     transparent: 'transparent',
-  });
+  };
 
-  /** Global variables to pass the css engine. */
-  static vars = Object.fromEntries(
-    Object.entries(ThemeColor.values).map(([key, value]) => [`--${kebabCase(key)}`, value]),
-  );
+  /**
+   * Global variables to pass the css engine.
+   */
+  vars: Record<string, string>;
 
-  /** Return the value of a color using css variables. */
+  /**
+   * Color values to use in the project.
+   */
+  values: typeof ThemeColor.defaultValues;
+
+  /**
+   * Return the value of a color using css variables.
+   */
   get(colorName: ThemeColorOption, config?: GetColorConfig) {
     const defaultConfig: Required<GetColorConfig> = {
       value: false,
@@ -52,7 +71,7 @@ export class ThemeColor {
     const { value, alpha } = { ...defaultConfig, ...config };
 
     if (alpha !== 1) {
-      const color = value ? ThemeColor.values[colorName] : `var(--${kebabCase(colorName)})`;
+      const color = value ? this.values[colorName] : `var(--${kebabCase(colorName)})`;
 
       const colorStrength = 100 - alpha * 100;
       const transparentStrength = alpha * 100;
@@ -60,13 +79,16 @@ export class ThemeColor {
     }
 
     if (value) {
-      return ThemeColor.values[colorName];
+      return this.values[colorName];
     }
 
     return `var(--${kebabCase(colorName)})`;
   }
 }
 
+/**
+ * Configuration for the get method.
+ */
 export type GetColorConfig = {
   /**
    * If true it will return the value of the color instead of the css variable (Defaults to false).
@@ -76,5 +98,14 @@ export type GetColorConfig = {
   alpha?: number;
 };
 
-/** Union type with the allowed colors of the theme. */
-export type ThemeColorOption = keyof typeof ThemeColor.values;
+/**
+ * Union type with the allowed colors of the theme.
+ */
+export type ThemeColorOption = keyof typeof ThemeColor.defaultValues;
+
+/**
+ * When creating the ThemeColor class allows to pass custom values for the values.
+ */
+export type CustomThemeColor = {
+  values?: Partial<typeof ThemeColor.defaultValues>;
+};

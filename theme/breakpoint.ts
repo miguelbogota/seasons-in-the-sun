@@ -1,36 +1,43 @@
-import { type ThemeDerivedSizeOption } from './utils';
-
 /** Breakpoints to use across all the project. */
 export class ThemeBreakpoint {
+  constructor(
+    /** Custom values for the breakpoints. */
+    _customValues?: CustomThemeBreakpoint,
+  ) {
+    this.values = { ...ThemeBreakpoint.defaultValues, ..._customValues?.values };
+    this.#keys = Object.keys(this.values) as ThemeBreakpointOption[];
+  }
+
+  /**
+   * Default values for the breakpoints.
+   */
+  static defaultValues = {
+    xs: 0,
+    sm: 550,
+    md: 900,
+    lg: 1200,
+    xl: 1530,
+    xxl: 1800,
+  };
+
   /**
    * Values for the breakpoints.
    * The breakpoint **start** at this value.
    * For instance with the first breakpoint xs: [xs, sm).
    */
-  static values = Object.freeze({
-    /** Phone. */
-    xs: 0,
-    /** Tablet. */
-    sm: 550,
-    /** Small Laptop */
-    md: 900,
-    /** Desktop. */
-    lg: 1200,
-    /** Large Screen. */
-    xl: 1530,
-    /** Extra Large Screen. */
-    xxl: 1800,
-  } as Record<ThemeBreakpointOption, number>);
+  values: Record<ThemeBreakpointOption, number>;
 
-  /** Keys of the breakpoints. */
-  #keys = Object.keys(ThemeBreakpoint.values) as ThemeBreakpointOption[];
+  /**
+   * Keys of the breakpoints.
+   */
+  #keys: ThemeBreakpointOption[];
 
   /**
    * Returns a media query string which matches screen widths greater than the screen size given by
    * the breakpoint key (inclusive).
    */
   up(key: ThemeBreakpointOption) {
-    const value = typeof key === 'string' ? ThemeBreakpoint.values[key] : key;
+    const value = typeof key === 'string' ? this.values[key] : key;
     return `(min-width: ${value}px)`;
   }
 
@@ -39,7 +46,7 @@ export class ThemeBreakpoint {
    * breakpoint key (exclusive).
    */
   down(key: ThemeBreakpointOption) {
-    const value = typeof key === 'string' ? ThemeBreakpoint.values[key] : key;
+    const value = typeof key === 'string' ? this.values[key] : key;
     return `(max-width: ${value - 1}px)`;
   }
 
@@ -49,8 +56,8 @@ export class ThemeBreakpoint {
    * breakpoint key in the second argument (exclusive).
    */
   between(start: ThemeBreakpointOption, end: ThemeBreakpointOption) {
-    const startValue = typeof start === 'string' ? ThemeBreakpoint.values[start] : start;
-    const endValue = typeof end === 'string' ? ThemeBreakpoint.values[end] : end;
+    const startValue = typeof start === 'string' ? this.values[start] : start;
+    const endValue = typeof end === 'string' ? this.values[end] : end;
 
     if (startValue > endValue) {
       throw new Error(
@@ -108,4 +115,24 @@ export class ThemeBreakpoint {
 /**
  * Values that can be use as a breakpoint, you can also use numbers to use a customer breakpoint.
  */
-export type ThemeBreakpointOption = ThemeDerivedSizeOption | number;
+export type ThemeBreakpointOption = keyof typeof ThemeBreakpoint.defaultValues | number;
+
+/**
+ * When creating the ThemeBreakpoint class allows to pass custom values for the values.
+ */
+export type CustomThemeBreakpoint = {
+  values?: {
+    /** Phone. */
+    xs?: number;
+    /** Tablet. */
+    sm?: number;
+    /** Small Laptop */
+    md?: number;
+    /** Desktop. */
+    lg?: number;
+    /** Large Screen. */
+    xl?: number;
+    /** Extra Large Screen. */
+    xxl?: number;
+  };
+};

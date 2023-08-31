@@ -14,22 +14,24 @@ describe('Theme / ThemeSize', () => {
     expect(size3).toBe('var(--size-8)');
   });
 
-  it('should return the value of a size using css variables with config', () => {
-    const size1 = size.get('xs', { xs: 1 });
+  it('should allow custom values', () => {
+    const customSize = new ThemeSize({
+      values: {
+        base: {
+          1: '1px',
+          2: '2px',
+        },
+        derived: {
+          xs: 1,
+          sm: 2,
+        },
+      },
+    });
+
+    const size1 = customSize.get('xs');
     expect(size1).toBe('var(--size-1)');
 
-    const size2 = size.get('sm', { sm: 2 });
+    const size2 = customSize.get('sm');
     expect(size2).toBe('var(--size-2)');
-  });
-
-  it('should return the value of the size instead of the css variable', () => {
-    const size1 = size.get('xs', { xs: 1, value: true });
-    expect(size1).toBe('4rem');
-
-    const size2 = size.get('sm', { sm: 2, value: true });
-    expect(size2).toBe('3rem');
-
-    const size3 = size.get(2, { value: true });
-    expect(size3).toBe('3rem');
   });
 });
