@@ -116,7 +116,7 @@ export default [
   },
   {
     // Testing files settings.
-    files: ['*.test.ts', '*.test.tsx'],
+    files: ['**/*.test.ts', '**/*.test.tsx'],
     rules: {
       'no-console': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
