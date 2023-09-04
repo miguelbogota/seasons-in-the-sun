@@ -25,13 +25,15 @@ exports[`Game / Menu / Component > should match snapshot 1`] = `
       </a>
     </nav>
     <div
-      style="position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px; z-index: 90; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center;"
+      class="menu__1ofgcy10"
     >
       <button
+        class="menu__1ofgcy11"
         id="play-button"
-        style="padding: 2rem; cursor: pointer; border-radius: 5px;"
       >
-        Click to play
+        <h3>
+          Click to play
+        </h3>
       </button>
     </div>
   </div>

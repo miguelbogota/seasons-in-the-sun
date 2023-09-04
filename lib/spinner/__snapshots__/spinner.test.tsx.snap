@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Lib / LoadingSpinner > should match snapshot 1`] = `
+<div>
+  <svg
+    class="spinner__1pyelcq2"
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      class="spinner__1pyelcq3"
+      cx="50"
+      cy="50"
+      r="45"
+    />
+  </svg>
+</div>
+`;

@@ -3,7 +3,7 @@ import { type DependencyList, useEffect } from 'react';
 /**
  * Creates a typesafe custom event listener for React.
  */
-export function customCustomEvent<const T extends string[], TData>(config?: CustomEventConfig) {
+export function createCustomEvent<const T extends string[], TData>(config?: CustomEventConfig) {
   const defaultConfig: Required<CustomEventConfig> = {
     name: 'unnamed',
     debug: false,

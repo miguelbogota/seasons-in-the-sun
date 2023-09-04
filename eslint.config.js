@@ -70,6 +70,7 @@ export default [
       'one-var': ['error', 'never'],
       eqeqeq: 'warn',
 
+      'import/export': 'off',
       'import/namespace': 'off',
       'simple-import-sort/imports': 'warn',
       'simple-import-sort/exports': 'warn',
@@ -110,6 +111,7 @@ export default [
         },
       ],
 
+      'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/no-unknown-property': 'off',
     },

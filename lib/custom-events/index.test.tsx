@@ -1,8 +1,8 @@
 import { fireEvent, render, renderHook, screen } from '@testing-library/react';
 
-import { customCustomEvent } from './index';
+import { createCustomEvent } from './index';
 
-const useCustomEventListener = customCustomEvent<['test-1' | 'test-2' | 'test-3'], string>({
+const useCustomEventListener = createCustomEvent<['test-1' | 'test-2' | 'test-3'], string>({
   name: 'testing-event',
 });
 const emitCustomEvent = useCustomEventListener.emit;

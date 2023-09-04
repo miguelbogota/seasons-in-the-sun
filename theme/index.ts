@@ -4,6 +4,7 @@ import { ThemePalette } from './palette';
 export { type ThemeBreakpoint, type ThemeBreakpointOption } from './breakpoint';
 export { type GetColorConfig, type ThemeColor, type ThemeColorOption } from './color';
 export { type ThemeFullColorOption, type ThemePalette, type ThemePaletteOption } from './palette';
+export * from '@vanilla-extract/css';
 
 /** Theme object with all the values to use in the project styling. */
 export const theme = Object.freeze({

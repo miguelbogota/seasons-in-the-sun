@@ -1,6 +1,7 @@
 'use client';
 
 import { GameMenu, useGameMenuState } from '@app/game/menu';
+import { Duck } from '@app/game/models';
 import { theme } from '@app/theme';
 import {
   Box,
@@ -12,9 +13,8 @@ import {
 } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { CapsuleCollider, Physics, type RapierRigidBody, RigidBody } from '@react-three/rapier';
-import { type ComponentProps, type PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { type ComponentProps, type PropsWithChildren, useRef } from 'react';
 import { type Mesh, Vector3 } from 'three';
-import { type PointerLockControls as PointerLockControlsImpl } from 'three-stdlib';
 
 /**
  * Main scene to show.
@@ -31,17 +31,39 @@ export function Scene() {
           <ambientLight intensity={0.5} />
           <directionalLight position={[2, 5, 5]} intensity={0.5} castShadow />
 
-          <Physics gravity={[0, -30, 0]}>
+          <GamePhysics>
             {[0, 1.5, 3, 4.5, 6, 7.5].map((v) => (
               <SimpleBox key={v} position={[v, 4, -15]} />
             ))}
 
+            <Duck
+              rigidBodyProps={{
+                position: [-3, 4, -15],
+              }}
+            />
+
             <Ground />
             <Player />
-          </Physics>
+          </GamePhysics>
         </Canvas>
       </GameKeyboardControls>
     </>
+  );
+}
+
+/**
+ * Physics wrapper to pause when the menu is open.
+ */
+function GamePhysics(props: PropsWithChildren) {
+  const { children } = props;
+
+  const isMenuOpen = useGameMenuState((state) => state.isOpen);
+  const isMenuLoading = useGameMenuState((state) => state.isLoading);
+
+  return (
+    <Physics gravity={[0, -30, 0]} paused={isMenuOpen || isMenuLoading}>
+      {children}
+    </Physics>
   );
 }
 
@@ -50,23 +72,12 @@ export function Scene() {
  */
 function SimpleBox(props: ComponentProps<typeof Box>) {
   const meshRef = useRef<Mesh>(null);
-  const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
 
   return (
     <RigidBody colliders="cuboid">
-      <Box
-        {...props}
-        ref={meshRef}
-        scale={active ? 1.5 : 1}
-        onClick={() => setActive(!active)}
-        onPointerOver={() => setHover(true)}
-        onPointerOut={() => setHover(false)}
-      >
+      <Box {...props} ref={meshRef}>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial
-          color={hovered ? theme.palette.game('pink') : theme.palette.game('orange')}
-        />
+        <meshStandardMaterial color={theme.palette.game('pink')} />
       </Box>
     </RigidBody>
   );
@@ -174,23 +185,43 @@ function GameKeyboardControls(props: PropsWithChildren) {
  * Controls with the lock API opening and closing the game menu.
  */
 function GamePointerLockControls() {
-  const controlsRef = useRef<PointerLockControlsImpl>(null);
+  // A requestPointerLock call immediately after the default unlock gesture MUST fail even when
+  // transient activation is available, to prevent malicious sites from acquiring an unescapable
+  // locked state through repeated lock attempts. On the other hand, a requestPointerLock call
+  // immediately after a programmatic lock exit (through a exitPointerLock call) MUST succeed when
+  // transient activation 6 is available, to enable applications to move frequently between
+  // interaction modes, possibly through a timer or remote network activity.
+
+  // In other words, if the lock was exited from code then it can be re-entered immediately. If it
+  // was exited by the user pressing the default exit key (usually ESC) then immediate re-entry MUST
+  // fail and must wait at least 1 second before it can be re-entered. This is the loading time.
+  const LOADING_TIME = 1500;
+
+  const timeout = (callback: () => void) =>
+    new Promise((resolve) =>
+      setTimeout(() => {
+        callback();
+        resolve(undefined);
+      }, LOADING_TIME),
+    );
 
   const close = useGameMenuState((state) => state.close);
   const open = useGameMenuState((state) => state.open);
   const selector = useGameMenuState((state) => state.selector);
+  const setLoading = useGameMenuState((state) => state.setLoading);
 
-  useEffect(() => {
-    const { current: controls } = controlsRef;
-
-    controls?.addEventListener('lock', () => close());
-    controls?.addEventListener('unlock', () => open());
-
-    return () => {
-      controls?.removeEventListener('lock', () => null);
-      controls?.removeEventListener('unlock', () => null);
-    };
-  }, [controlsRef, close, open]);
-
-  return <PointerLockControls ref={controlsRef} selector={selector(true)} />;
+  return (
+    <PointerLockControls
+      selector={selector(true)}
+      onLock={() => {
+        close();
+        setLoading(false);
+      }}
+      onUnlock={() => {
+        setLoading(true);
+        open();
+        timeout(() => setLoading(false));
+      }}
+    />
+  );
 }

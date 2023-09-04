@@ -1,6 +1,8 @@
-import { theme } from '@app/theme';
+import { Spinner } from '@app/lib/spinner';
 import { Navigation } from '@app/website/navigation';
+import clsx from 'clsx';
 
+import { menuStyles } from './menu.css';
 import { useGameMenuState } from './state';
 
 /**
@@ -8,37 +10,20 @@ import { useGameMenuState } from './state';
  * gets triggered).
  */
 export function GameMenu() {
-  const [isOpen, selector] = useGameMenuState((state) => [state.isOpen, state.selector]);
+  const isOpen = useGameMenuState((state) => state.isOpen);
+  const isLoading = useGameMenuState((state) => state.isLoading);
+  const selector = useGameMenuState((state) => state.selector);
 
   return (
-    <div style={{ display: isOpen ? 'block' : 'none' }}>
+    <div style={{ display: isOpen || isLoading ? 'block' : 'none' }}>
       <Navigation />
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 90,
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: theme.palette('background.sheet', { alpha: 0.5 }),
-        }}
-      >
+      <div className={menuStyles.menu}>
         <button
           id={selector()}
-          style={{
-            padding: '2rem',
-            backgroundColor: theme.palette('primary'),
-            cursor: 'pointer',
-            borderRadius: 5,
-          }}
+          className={clsx(menuStyles.button, { [menuStyles.loading]: isLoading })}
+          disabled={isLoading}
         >
-          Click to play
+          {isLoading ? <Spinner /> : <h3>Click to play</h3>}
         </button>
       </div>
     </div>

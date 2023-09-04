@@ -14,7 +14,7 @@ tree, no matter how deep it is nested.
 #### Create Custom Event Emitter
 
 ```tsx
-import { createCustomEvent } from '@lib/custom-events';
+import { createCustomEvent } from '@app/lib/custom-events';
 
 type CustomEventTypes = ['test-1' | 'test-2' | 'test-3'];
 type CustomEventDataType = string;
