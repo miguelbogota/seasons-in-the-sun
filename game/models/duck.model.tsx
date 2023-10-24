@@ -21,7 +21,7 @@ export function Duck(props: DuckProps) {
 
   return (
     <RigidBody {...rigidBodyProps}>
-      <CapsuleCollider args={[0.8, 0.4]} />
+      <CapsuleCollider args={[1, 1]} />
       <group {...groupProps} dispose={null}>
         <mesh
           geometry={nodes.character_duck.geometry}

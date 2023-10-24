@@ -1,7 +1,7 @@
 'use client';
 
 import { GameMenu, useGameMenuState } from '@app/game/menu';
-import { Duck } from '@app/game/models';
+import { Duck, Viking } from '@app/game/models';
 import { theme } from '@app/theme';
 import {
   Box,
@@ -39,6 +39,12 @@ export function Scene() {
             <Duck
               rigidBodyProps={{
                 position: [-3, 4, -15],
+              }}
+            />
+
+            <Viking
+              rigidBodyProps={{
+                position: [-7, 4, -15],
               }}
             />
 
