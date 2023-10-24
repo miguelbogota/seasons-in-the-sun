@@ -2,9 +2,9 @@
 
 ## Why
 
-React way of handling events is to pass callbacks to child components.
-Although this is a good way, it becomes difficult to pass callbacks to deep nested components or
-three.js components which are not part of React ecosystem.
+React way of handling events is to pass callbacks to child components. Although this is a good way,
+it becomes difficult to pass callbacks to deep nested components or three.js components which are
+not part of React ecosystem.
 
 This is where Custom Events come in handy. They can be used to send events to any component in DOM
 tree, no matter how deep it is nested.
@@ -102,4 +102,4 @@ function ParentComponent() {
 ```
 
 This uses bubble feature of DOM Events, so make sure listener element is parent of emitter element
-in your DOM
+in your DOM.
