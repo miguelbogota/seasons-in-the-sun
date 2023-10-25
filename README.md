@@ -5,27 +5,71 @@ and build your own house. The game also wants to rise awareness about veganism a
 
 ## Mechanics
 
-- The game will have multiple NPCs, each with their own personality and dialogue with an unique
-  questline for the player to complete. Upon completion of the questline, the player will be
-  rewarded with a special item specific to that NPC. Each quest will also provide the player with a
-  small reward (Money or items).
-- The game will have a day/night cycle, with the day being 20 minutes long and the night being 10
-  minutes long. During the day, the player can do whatever they want, and during the night, the
-  player can sleep to skip the night and go to the next day.
-- The game will have a hunger and thirst system, where the player will have to eat and drink to
-  survive. If the player does not eat or drink, they will lose health. If the player's health
-  reaches 0, they will die.
-- The game is divided in seasons. Each season will contain different quests with rewards specific to
-  that season. The seasons will also have different weather, with each season having a specific
-  weather pattern.
-- The game is also goal oriented, where the player will have to complete certain monuments (CTM
-  style) to progress through the game. Each monument will have a multiple bundles to complete, once
-  the player completes one a small reward will be given and when the player completes all the
-  bundles for an monument a special reward will be given.
-- The game will have a crafting system, where the player can craft items using the materials they
-  have.
-- The player will not have a tool durability system, where the player will not have to worry about
-  their tools breaking. But the player can upgrade their tools using materials they have.
-- Since the game wants to rise awareness about veganism and the environment, the player will not be
-  able to kill animals. The player will have to raise animals and grow crops to obtain the materials
-  they need. (Fishing will be allowed but the player can rise fish in a fish tank).
+**Player Interaction and Progression:**
+
+- NPCs with unique personalities, questlines, and rewards.
+- Goal-oriented play: Complete monuments by fulfilling bundles.
+- Skill system to unlock recipes, tool upgrades, and camera features.
+- Encyclopedia updates with quest and NPC interactions.
+- Journal for recording thoughts, notes, and progress tracking.
+- Journal entries can be shared with other players.
+- Journal tracks progress towards completing monuments, questlines, quests and bundles. Showing the
+  player what they have left to do.
+
+**Time and Survival:**
+
+- Day/night cycle (20 minutes day, 10 minutes night).
+- Sleep to advance to the next day during the night phase.
+- Seasons with specific quests, rewards, and weather patterns.
+- Hunger and thirst system for survival.
+- Neglecting hunger/thirst causes health loss; reaching 0 health leads to death.
+
+**Farming:**
+
+- Farming system, tilt the soil to plant crops.
+- Crops have unique growth times and harvest times.
+- Water crops and harvest crops to get materials.
+- Unique crops for each season.
+- Crops can be sold for money.
+- Crops can be used to make food, gifts for NPCs, gifts for animals and bundles for monuments.
+- Crops can have special effects when eaten.
+- Crops can have quality levels.
+
+**Animal Care:**
+
+- Animals have unique names, personalities and behaviors.
+- Animals can be petted, played with, and given gifts.
+- Animals need to be fed and watered to make them happy.
+- Happy animals produce more and better materials.
+- Materials given by animals can be used to make food, gifts for NPCs, gifts for animals and bundles
+  for monuments.
+- Materials given by animals can have special effects when eaten.
+- Materials given by animals can have quality levels.
+- Animals can be sold for money.
+- No animal killing; raise them for materials.
+- Fishing not allowed, but players can raise fish in a tank.
+
+**Building and Decoration:**
+
+- Build your own house.
+- Build farm buildings (barn, coop, greenhouse, etc...).
+- Build decorations (furniture, statues, etc...).
+- Build unique buildings for each season.
+- Build unique decorations for each season.
+- Allow to decorate friendly NPCs places.
+
+**Crafting and Tool Upgrades:**
+
+- Crafting system for item creation.
+- Base tools have to be purchased or unlocked (sword, pickaxe, axe, hoe, watering can, etc...).
+- Tools have no durability but can be upgraded.
+- Cooking system for nutritious food preparation.
+
+**Photography and Encyclopedias:**
+
+- Photography system for capturing NPCs, animals, seasons.
+- Challenges guide players to unique fish locations.
+- Encyclopedia uses photos taken as the thumbnail, making it unique across different playthroughs.
+- Encyclopedia entries can be shared with other players.
+- Encyclopedia record photos, dates, times, descriptions, and locations.
+- Completing 100% the encyclopedia is a monument and unlocks a special reward.
