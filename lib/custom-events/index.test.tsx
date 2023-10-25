@@ -2,7 +2,7 @@ import { fireEvent, render, renderHook, screen } from '@testing-library/react';
 
 import { createCustomEvent } from './index';
 
-const useCustomEventListener = createCustomEvent<['test-1' | 'test-2' | 'test-3'], string>({
+const useCustomEventListener = createCustomEvent<'test-1' | 'test-2' | 'test-3', string>({
   name: 'testing-event',
 });
 const emitCustomEvent = useCustomEventListener.emit;
@@ -13,7 +13,7 @@ describe('Lib / Custom Events', () => {
     const callback = vi.fn();
     renderHook(() => useCustomEventListener('test-1', callback));
     emitCustomEvent('test-1', 'test-1-data');
-    expect(callback).toHaveBeenCalledWith('test-1-data');
+    expect(callback).toHaveBeenCalledWith(['test-1', 'test-1-data']);
   });
 
   it('should not run the callback when an event is triggered with a different name', () => {
@@ -28,10 +28,10 @@ describe('Lib / Custom Events', () => {
     renderHook(() => useCustomEventListener(['test-1', 'test-2'], callback));
 
     emitCustomEvent('test-1', 'test-1-data');
-    expect(callback).toHaveBeenCalledWith('test-1-data');
+    expect(callback).toHaveBeenCalledWith(['test-1', 'test-1-data']);
 
     emitCustomEvent('test-2', 'test-2-data');
-    expect(callback).toHaveBeenCalledWith('test-2-data');
+    expect(callback).toHaveBeenCalledWith(['test-2', 'test-2-data']);
   });
 
   it('should allow to make an emitter', () => {
@@ -43,14 +43,14 @@ describe('Lib / Custom Events', () => {
 
     fireEvent.click(trigger);
 
-    expect(callback).toHaveBeenCalledWith('test-data-1');
+    expect(callback).toHaveBeenCalledWith(['test-1', 'test-data-1']);
   });
 });
 
 /**
  * Testing component for the emitter.
  */
-function TestParent({ callback }: { callback: (data: string) => void }) {
+function TestParent({ callback }: { callback: (payload: [event: string, data: string]) => void }) {
   const listener = useCustomEventListener('test-1', callback);
   const emitter = newCustomEventEmitter();
   const trigger = () => emitter.emit('test-1', 'test-data-1');

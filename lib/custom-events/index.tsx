@@ -3,7 +3,7 @@ import { type DependencyList, useEffect } from 'react';
 /**
  * Creates a typesafe custom event listener for React.
  */
-export function createCustomEvent<const T extends string[], TData>(config?: CustomEventConfig) {
+export function createCustomEvent<const T extends string, TData>(config?: CustomEventConfig) {
   const defaultConfig: Required<CustomEventConfig> = {
     name: 'unnamed',
     debug: false,
@@ -24,11 +24,16 @@ export function createCustomEvent<const T extends string[], TData>(config?: Cust
   }
 
   /**
+   * Payload dispatched by the custom event.
+   */
+  type Payload<E> = [event: E extends string[] ? E[number] : E, data: TData];
+
+  /**
    * Creates a custom event listener hook to be used in React.
    */
-  function useCustomEventListener(
-    eventNames: T[number] | T[number][],
-    eventHandler: (data: TData) => void,
+  function useCustomEventListener<const E extends T | T[]>(
+    eventNames: E,
+    eventHandler: (payload: Payload<E>) => void,
     deps?: DependencyList,
   ) {
     let element: HTMLElement | null;
@@ -38,12 +43,12 @@ export function createCustomEvent<const T extends string[], TData>(config?: Cust
       // eslint-disable-next-line react-hooks/exhaustive-deps
       element ??= getElement();
 
-      const handleEvent = (event: CustomEvent | Event, eventName: T[number]) => {
-        const data = (event as CustomEvent).detail;
-        eventHandler(data);
+      const handleEvent = (event: CustomEvent | Event, eventName: string) => {
+        const payload = [eventName, (event as CustomEvent).detail] as Payload<E>;
+        eventHandler(payload);
 
         if (debug) {
-          console.warn(`[${name} triggered] "${eventName}" - ${JSON.stringify(data)}.`);
+          console.warn(`[${name} triggered] "${eventName}" - ${JSON.stringify(payload)}.`);
         }
       };
 
