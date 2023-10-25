@@ -9,7 +9,7 @@ and build your own house. The game also wants to rise awareness about veganism a
 
 - NPCs with unique personalities, questlines, and rewards.
 - Goal-oriented play: Complete monuments by fulfilling bundles.
-- Skill system to unlock recipes, tool upgrades, and camera features.
+- Skill system to unlock recipes, multitool gun upgrades, and camera features.
 - Encyclopedia updates with quest and NPC interactions.
 - Journal for recording thoughts, notes, and progress tracking.
 - Journal entries can be shared with other players.
@@ -61,9 +61,22 @@ and build your own house. The game also wants to rise awareness about veganism a
 **Crafting and Tool Upgrades:**
 
 - Crafting system for item creation.
-- Base tools have to be purchased or unlocked (sword, pickaxe, axe, hoe, watering can, etc...).
-- Tools have no durability but can be upgraded.
+- No tools, but instead a multitool gun that can be upgraded.
+- Multitool gun can shoot and vacuum items like in Slime Rancher.
+- Multitool gun can be upgraded to shoot and vacuum different types of items.
+- Multitool gun can shoot water to water crops.
+- Multitool gun can shoot soil, fertilizer, seeds and compost to plant crops.
 - Cooking system for nutritious food preparation.
+- Animations for tools like in Raft.
+
+**Enemies and Combat:**
+
+- Multitool gun will convert into a energy sword and plasma gun when fighting enemies.
+- Enemies will only be in the mines and caves.
+- Enemies will be monsters like skeletons, zombies, and ghosts.
+- Enemies will drop materials when killed.
+- Enemies will drop money when killed.
+- Enemies will drop unique items when killed.
 
 **Photography and Encyclopedias:**
 
