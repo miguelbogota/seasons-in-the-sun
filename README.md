@@ -3,6 +3,16 @@
 Season in the un is a farming, cosy and relaxing game. You can grow your own crops, raise animals,
 and build your own house. The game also wants to rise awareness about veganism and the environment.
 
+Running a robust web-based game comes with its challenges, and one notable downside is the lack of
+asset caching. When a player opens the game, all assets must be downloaded from the server, which
+can be time-consuming and far from an ideal player experience.
+
+To address this issue, players can download an executable file, which comes preloaded with all
+necessary assets and serving them to the web game, eliminating the need for repeated downloads from
+the server. Players can enjoy uninterrupted gameplay with the assurance that their experience won't
+be hampered by asset loading times. This also allows players to play the game offline and mod the
+assets of the game. This will only be available for computers, not mobile devices.
+
 ## Mechanics
 
 **Player Interaction and Progression:**
