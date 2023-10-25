@@ -29,7 +29,6 @@ exports[`Game / Menu / Component > should match snapshot 1`] = `
     >
       <button
         class="menu__1ofgcy11"
-        id="play-button"
       >
         <h3>
           Click to play

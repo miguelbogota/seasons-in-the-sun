@@ -16,8 +16,6 @@ export type GameMenuState = {
   close: () => void;
   /** Function to toggle the menu. */
   toggle: () => void;
-  /** Function to get the selector of the menu. */
-  selector: (prefix?: boolean) => string;
 };
 
 /**
@@ -30,8 +28,4 @@ export const useGameMenuState = createStore<GameMenuState>((set) => ({
   open: () => set(() => ({ isOpen: true })),
   close: () => set(() => ({ isOpen: false })),
   toggle: () => set((state) => ({ isOpen: !state.isOpen })),
-  selector: (prefix = false) => {
-    const htmlSelector = 'play-button';
-    return prefix ? `#${htmlSelector}` : htmlSelector;
-  },
 }));

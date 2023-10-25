@@ -8,12 +8,6 @@ describe('Game / Menu / State', () => {
     expect(result.current.isOpen).toBe(true);
   });
 
-  it('should return the selector with and without the prefix', () => {
-    const { result } = renderHook(() => useGameMenuState());
-    expect(result.current.selector()).toBe('play-button');
-    expect(result.current.selector(true)).toBe('#play-button');
-  });
-
   it('should toggle the menu', () => {
     const { result } = renderHook(() => useGameMenuState());
     expect(result.current.isOpen).toBe(true);

@@ -1,3 +1,4 @@
+import { emitCameraControlEvent } from '@app/game/player/camera-control';
 import { Spinner } from '@app/lib/spinner';
 import { Navigation } from '@app/website/navigation';
 import clsx from 'clsx';
@@ -12,16 +13,15 @@ import { useGameMenuState } from './state';
 export function GameMenu() {
   const isOpen = useGameMenuState((state) => state.isOpen);
   const isLoading = useGameMenuState((state) => state.isLoading);
-  const selector = useGameMenuState((state) => state.selector);
 
   return (
     <div style={{ display: isOpen || isLoading ? 'block' : 'none' }}>
       <Navigation />
       <div className={menuStyles.menu}>
         <button
-          id={selector()}
           className={clsx(menuStyles.button, { [menuStyles.loading]: isLoading })}
           disabled={isLoading}
+          onClick={() => emitCameraControlEvent('lock-controls', null)}
         >
           {isLoading ? <Spinner /> : <h3>Click to play</h3>}
         </button>
