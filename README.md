@@ -7,11 +7,12 @@ Running a robust web-based game comes with its challenges, and one notable downs
 asset caching. When a player opens the game, all assets must be downloaded from the server, which
 can be time-consuming and far from an ideal player experience.
 
-To address this issue, players can download an executable file, which comes preloaded with all
-necessary assets and serving them to the web game, eliminating the need for repeated downloads from
-the server. Players can enjoy uninterrupted gameplay with the assurance that their experience won't
-be hampered by asset loading times. This also allows players to play the game offline and mod the
-assets of the game. This will only be available for computers, not mobile devices.
+To address this issue, players can download an executable file (Built with Electron.js), which comes
+preloaded with all necessary assets and serving them to the web game, eliminating the need for
+repeated downloads from the server. Players can enjoy uninterrupted gameplay with the assurance that
+their experience won't be hampered by asset loading times. This also allows players to play the game
+offline and mod the assets of the game. This will only be available for computers, not mobile
+devices.
 
 ## Mechanics
 
