@@ -11,7 +11,7 @@ import { Physics, RigidBody } from '@react-three/rapier';
 import { type ComponentProps, type PropsWithChildren, useRef } from 'react';
 import { type Mesh } from 'three';
 
-import { MainMenu } from '../main-menu/main-menu.component';
+import { MenuMain } from '../menu-main';
 import { PauseMenu } from '../pause-menu/pause-menu.component';
 
 /**
@@ -22,7 +22,7 @@ export function Scene() {
 
   return (
     <>
-      <MainMenu />
+      <MenuMain />
       <PauseMenu />
 
       {state.isPlaying && (
