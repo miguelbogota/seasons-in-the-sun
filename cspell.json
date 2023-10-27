@@ -6,5 +6,17 @@
   "dictionaries": [],
   "ignoreWords": [],
   "import": [],
-  "words": ["clsx", "csstype", "drei", "expl", "gltf", "Nurbs", "testid", "vitest", "zustand"]
+  "words": [
+    "clsx",
+    "csstype",
+    "drei",
+    "expl",
+    "gltf",
+    "gunjs",
+    "nurbs",
+    "signup",
+    "testid",
+    "vitest",
+    "zustand"
+  ]
 }

@@ -15,17 +15,19 @@ export function GameMenu() {
   const isLoading = useGameMenuState((state) => state.isLoading);
 
   return (
-    <div style={{ display: isOpen || isLoading ? 'block' : 'none' }}>
-      <Navigation />
-      <div className={menuStyles.menu}>
-        <button
-          className={clsx(menuStyles.button, { [menuStyles.loading]: isLoading })}
-          disabled={isLoading}
-          onClick={() => emitCameraControlEvent('lock-controls', null)}
-        >
-          {isLoading ? <Spinner /> : <h3>Click to play</h3>}
-        </button>
+    (isOpen || isLoading) && (
+      <div>
+        <Navigation />
+        <div className={menuStyles.menu}>
+          <button
+            className={clsx(menuStyles.button, { [menuStyles.loading]: isLoading })}
+            disabled={isLoading}
+            onClick={() => emitCameraControlEvent('lock-controls', null)}
+          >
+            {isLoading ? <Spinner /> : <h3>Click to play</h3>}
+          </button>
+        </div>
       </div>
-    </div>
+    )
   );
 }

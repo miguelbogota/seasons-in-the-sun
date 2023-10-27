@@ -2,9 +2,7 @@
 
 exports[`Game / Menu / Component > should match snapshot 1`] = `
 <div>
-  <div
-    style="display: block;"
-  >
+  <div>
     <nav
       class="navigation_navigation__hx5tsf0"
     >

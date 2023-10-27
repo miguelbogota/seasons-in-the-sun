@@ -1,3 +1,3 @@
 # Website Modules
 
-Here you will ind all the website modules.
+Here you will find all the website modules.
