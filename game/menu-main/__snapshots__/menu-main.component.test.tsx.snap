@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Game / MenuMain / Component > should match snapshot 1`] = `
+<div>
+  <div
+    class="menu-main__8gkvil0"
+  >
+    <img
+      alt="Background Image"
+      class="menu-main__8gkvil1"
+      src="/images/menu-main-background.webp"
+    />
+    <div
+      class="menu-main__8gkvil3"
+    >
+      <h1
+        class="menu-main__8gkvil4"
+      >
+        Seasons in the Sun
+      </h1>
+      <button
+        class="menu-main__8gkvil5"
+      >
+        Begin
+      </button>
+      <button
+        class="menu-main__8gkvil5"
+      >
+        Options
+      </button>
+    </div>
+  </div>
+</div>
+`;
