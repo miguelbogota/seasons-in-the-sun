@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 
-import { MenuMain } from './menu-main.component';
+import { Authentication } from './authentication.component';
 
-describe('Game / MenuMain / Component', () => {
+describe('Website / Authentication / Component', () => {
   beforeAll(() => {
     global.GUN = () => ({
       // @ts-expect-error Mocking get method.
@@ -16,7 +16,7 @@ describe('Game / MenuMain / Component', () => {
   });
 
   it('should match snapshot', () => {
-    const { container } = render(<MenuMain />);
+    const { container } = render(<Authentication />);
     expect(container).toMatchSnapshot();
   });
 });

@@ -1,5 +1,6 @@
 'use client';
 
+import { Authentication } from '@app/website/authentication';
 import { useState } from 'react';
 
 import * as styles from './menu-main.css';
@@ -32,6 +33,10 @@ export function MenuMain() {
           {tempIsLoading ? 'Loading...' : 'Begin'}
         </button>
         <button className={styles.button}>Options</button>
+      </div>
+
+      <div className={styles.authMenu}>
+        <Authentication />
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import { createVar, globalStyle, style, theme } from '@app/theme';
 
+const menuSpace = createVar();
+
 export const root = style({
   width: '100vw',
   height: '100vh',
@@ -19,8 +21,6 @@ export const image = style({
     },
   },
 });
-
-const menuSpace = createVar();
 
 export const menu = style({
   vars: {
@@ -62,6 +62,19 @@ export const button = style({
       marginBottom: '1rem',
       cursor: 'pointer',
       transition: 'background-color 0.2s ease-in-out',
+    },
+  },
+});
+
+export const authMenu = style({
+  vars: {
+    [menuSpace]: '50px',
+  },
+  selectors: {
+    [`${root} > &`]: {
+      position: 'absolute',
+      right: menuSpace,
+      top: menuSpace,
     },
   },
 });

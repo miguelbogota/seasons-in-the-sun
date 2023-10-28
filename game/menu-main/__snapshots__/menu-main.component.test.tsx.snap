@@ -3,11 +3,11 @@
 exports[`Game / MenuMain / Component > should match snapshot 1`] = `
 <div>
   <div
-    class="menu-main__8gkvil0"
+    class="menu-main__8gkvil1"
   >
     <img
       alt="Background Image"
-      class="menu-main__8gkvil1"
+      class="menu-main__8gkvil2"
       src="/images/menu-main-background.webp"
     />
     <div
@@ -28,6 +28,65 @@ exports[`Game / MenuMain / Component > should match snapshot 1`] = `
       >
         Options
       </button>
+    </div>
+    <div
+      class="menu-main__8gkvil6"
+    >
+      <div>
+        <button>
+          Login
+        </button>
+        <form>
+          <h3>
+            Sign up
+          </h3>
+          <label
+            for="username"
+          >
+            Username
+          </label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+          />
+          <label
+            for="password"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+          />
+          <label
+            for="confirm-password"
+          >
+            Confirm password
+          </label>
+          <input
+            id="confirm-password"
+            name="confirm-password"
+            type="password"
+          />
+          <label
+            for="email"
+          >
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+          />
+          <button
+            type="submit"
+          >
+            Sign up
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

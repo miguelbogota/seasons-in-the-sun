@@ -39,8 +39,6 @@ export function createCustomEvent<const T extends string, TData>(config?: Custom
     let element: HTMLElement | null;
 
     useEffect(() => {
-      // Rule disabled since the function will always return the latest value.
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       element ??= getElement();
 
       const handleEvent = (event: CustomEvent | Event, eventName: string) => {

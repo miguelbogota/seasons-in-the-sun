@@ -1,15 +1,21 @@
 import { type IGunInstance, type IGunUserInstance } from 'gun';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function useDB() {
-  const [db, setDb] = useState<IGunInstance | null>(null);
-  const [user, setUser] = useState<IGunUserInstance | null>(null);
+  const gunRef = useRef<IGunInstance>();
+  const userRef = useRef<IGunUserInstance>();
+  const onAuthRef = useRef<() => Promise<void>>();
 
   useEffect(() => {
     const gun = GUN();
-    setDb(gun);
-    setUser(gun.user().recall({ sessionStorage: true }));
-  }, []);
+    const user = gun.user().recall({ sessionStorage: true });
 
-  return { db, user };
+    gunRef.current = gun;
+    userRef.current = user;
+  }, [onAuthRef]);
+
+  return {
+    gun: () => gunRef.current,
+    user: () => userRef.current,
+  };
 }
