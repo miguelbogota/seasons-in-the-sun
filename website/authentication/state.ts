@@ -1,112 +1,114 @@
-// import { useDB } from '@app/db';
-// import { useEffect } from 'react';
-// import { create as createStore } from 'zustand';
+import { gun, type UserSpace } from '@app/lib/gun';
+import { useEffect } from 'react';
+import { create as createStore } from 'zustand';
 
-// type User = {
-//   username: string;
-//   email: string;
-//   imageUrl?: string;
-// };
+/**
+ * Authentication state hook.
+ *
+ * @param onAuthChanges Callback to be called when the user's authentication state changes.
+ */
+export function useAuthentication(onAuthChanges?: (user: AppUser | null) => void) {
+  const { isLoading, user } = useAuthenticationState();
 
-// type AuthenticationState = {
-//   is: boolean;
-//   user: null | User;
-//   isLoading: boolean;
-//   set: (state: Partial<Omit<AuthenticationState, 'set'>>) => void;
-// };
+  // Subscribe to changes in the user's authentication state.
+  useEffect(() => {
+    const unsubscribe = gun?.()
+      .user()
+      .authChanges((u) => {
+        onAuthChanges?.(u);
+        useAuthenticationState.setState({ isLoading: false, user: u });
+      });
 
-// const useAuthenticationState = createStore<AuthenticationState>((set) => ({
-//   is: false,
-//   user: null,
-//   isLoading: true,
-//   set: (state) => set({ ...state, is: !!state.user }),
-// }));
+    return unsubscribe;
+  }, []);
 
-// export function useAuthentication(onAuthChanges?: (user: AuthenticationState['user']) => void) {
-//   const { is, user: storeUser, isLoading, set: setStore } = useAuthenticationState();
-//   const { user, gun } = useDB();
+  // Sign in function.
+  const signin = async (credential: AppSinginCredentials) => {
+    const { username, password } = credential;
+    const user = await gun?.().user().auth(username, password);
+    return user;
+  };
 
-//   useEffect(() => {
-//     if (!user()?.is) {
-//       setStore({ isLoading: false });
-//     }
+  return {
+    /** State to validate if any process is in progress. */
+    isLoading,
+    /** Current authenticated user (If null it means the user is not authenticated). */
+    user,
+    /** Helper to validate simpler the if the user is authenticated. */
+    is: !!user,
+    /** Sign in function. */
+    signin: async (credential: AppSinginCredentials) => {
+      useAuthenticationState.setState({ isLoading: true });
+      const user = await signin(credential).catch(() => {
+        useAuthenticationState.setState({ isLoading: false });
+      });
+      return user;
+    },
+    /** Sign up function (If user signups successfully it also signs in). */
+    signup: async (credential: AppSignupCredentials) => {
+      const { username, password, ...metaData } = credential;
 
-//     gun()?.on('auth', async () => {
-//       const profile = (await user()?.get('profile')) as unknown as {
-//         username: string;
-//         email: string;
-//         imageUrl?: string;
-//       };
+      useAuthenticationState.setState({ isLoading: true });
+      const createdUser = await gun?.()
+        .user()
+        .create(username, password, {
+          ...metaData,
+          imageUrl: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${username}`,
+        })
+        .catch(() => {
+          useAuthenticationState.setState({ isLoading: false });
+        });
 
-//       setStore({ isLoading: false, user: profile });
-//     });
-//   }, []);
+      return createdUser;
+    },
+    /** Sign out function. */
+    signout: async () => {
+      useAuthenticationState.setState({ isLoading: true });
+      await gun?.()
+        .user()
+        .leave()
+        .catch(() => {
+          useAuthenticationState.setState({ isLoading: false });
+        });
+    },
+  };
+}
 
-//   useEffect(() => {
-//     onAuthChanges?.(storeUser);
-//   }, [storeUser]);
+/**
+ * Authentication state.
+ */
+type AuthenticationState = {
+  user: null | AppUser;
+  isLoading: boolean;
+};
 
-//   const signin = (credentials: { username: string; password: string }) => {
-//     const { username, password } = credentials;
-//     setStore({ isLoading: true });
+/**
+ * Authentication state store.
+ */
+const useAuthenticationState = createStore<AuthenticationState>(() => ({
+  // The user is updated in the `authChanges` callback.
+  user: null,
+  isLoading: true,
+}));
 
-//     return new Promise<User>((resolve, reject) => {
-//       user()?.auth(username, password, async (data) => {
-//         if ('err' in data) {
-//           reject(data.err);
-//           setStore({ isLoading: false, user: null });
-//           return;
-//         }
-//         const profile = (await user()?.get('profile')) as unknown as User;
-//         setStore({ isLoading: false, user: profile });
-//         resolve(profile);
-//       });
-//     });
-//   };
+/**
+ * App user type.
+ */
+export type AppUser = UserSpace['root'];
 
-//   return {
-//     is,
-//     user: storeUser,
-//     isLoading,
-//     signin,
-//     signout: () => {
-//       user()?.leave();
-//       setStore({ user: null });
-//     },
-//     signup: (credentials: { username: string; password: string; email: string }) => {
-//       const { username, password, email } = credentials;
-//       setStore({ isLoading: true });
+/**
+ * App signin credentials type.
+ */
+export type AppSinginCredentials = {
+  username: string;
+  password: string;
+};
 
-//       return new Promise<User>((resolve, reject) => {
-//         user()?.create(username, password, async (data) => {
-//           if ('err' in data) {
-//             reject(data.err);
-//             setStore({ isLoading: false, user: null });
-//             return;
-//           }
-
-//           user()?.auth(username, password, async (data) => {
-//             if ('err' in data) {
-//               reject(data.err);
-//               setStore({ isLoading: false, user: null });
-//               return;
-//             }
-
-//             const userProfile = {
-//               username,
-//               email,
-//               imageUrl: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${username}`,
-//             };
-
-//             user()
-//               ?.get('profile')
-//               .put(userProfile, async () => {
-//                 setStore({ isLoading: false, user: userProfile });
-//                 resolve(userProfile);
-//               });
-//           });
-//         });
-//       });
-//     },
-//   };
-// }
+/**
+ * App signup credentials type.
+ */
+export type AppSignupCredentials = {
+  username: string;
+  password: string;
+  email: string;
+};

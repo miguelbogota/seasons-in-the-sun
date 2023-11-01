@@ -56,7 +56,7 @@ function gunImpl() {
          */
         set(data: Partial<PathMatcher<PublicSpace, TPath>>): Promise<void> {
           return new Promise((resolve) =>
-            instance.put(data, (data) => ('err' in data ? reject(data.err) : resolve())),
+            instance.put(data, (data) => (data.err ? reject(data.err) : resolve())),
           );
         },
         /**
@@ -105,7 +105,7 @@ function gunImpl() {
              */
             set(data: Partial<PathMatcher<UserSpace, TPath>>): Promise<void> {
               return new Promise((resolve) =>
-                instance.put(data, (data) => ('err' in data ? reject(data.err) : resolve())),
+                instance.put(data, (data) => (data.err ? reject(data.err) : resolve())),
               );
             },
             /**
@@ -139,14 +139,40 @@ function gunImpl() {
         /**
          * Creates a new user.
          */
-        create(username: string, password: string): Promise<void> {
+        create(
+          username: string,
+          password: string,
+          additionalData: Omit<UserSpace['root'], 'username'>,
+        ): Promise<UserSpace['root']> {
           return new Promise<void>((resolve, reject) =>
             userInstance.create(username, password, (data) => {
               if ('err' in data) {
                 reject(data.err);
                 return;
               }
-              resolve();
+
+              // If user creation was successful, authenticate the user.
+              userInstance.auth(username, password, (data) => {
+                if ('err' in data) {
+                  reject(data.err);
+                  return;
+                }
+
+                // If authentication was successful, add additional data to the user's root.
+                userInstance.get('root').put({ ...additionalData, username }, (data) => {
+                  if (data.err) {
+                    reject(data.err);
+                    return;
+                  }
+
+                  // If additional data was added successfully, return the user's data.
+                  userInstance.get('root').once((user) => {
+                    const _user = omit(user, '_');
+                    authStore.setState({ user: _user });
+                    resolve(_user);
+                  });
+                });
+              });
             }),
           );
         },

@@ -125,24 +125,28 @@
 //     </div>
 //   );
 // }
-import { type DbSchema, gun } from '@app/lib/gun';
-import { useEffect, useState } from 'react';
+
+import { type ChangeEventHandler, useState } from 'react';
 
 import * as styles from './authentication.css';
+import { useAuthentication } from './state';
 
 export function Authentication() {
-  const [user, setUser] = useState<null | DbSchema['user']['root']>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, user, signin, signout, signup } = useAuthentication();
 
-  useEffect(() => {
-    const d = gun?.()
-      .user()
-      .authChanges((u) => {
-        setUser(u);
-        setIsLoading(false);
-      });
-    return () => d?.();
-  }, []);
+  const [data, setData] = useState({
+    username: '',
+    password: '',
+    'confirm-password': '',
+    email: '',
+  });
+
+  const updateData: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return isLoading ? (
     'loading...'
@@ -150,33 +154,31 @@ export function Authentication() {
     <div className={styles.root}>
       <pre>{JSON.stringify(user, null, 2)}</pre>
       {user ? (
-        <button
-          onClick={() => {
-            setIsLoading(true);
-            gun?.()
-              .user()
-              .leave()
-              .then(() => {
-                setIsLoading(false);
-              });
-          }}
-        >
-          logout
-        </button>
+        <button onClick={() => signout()}>logout</button>
       ) : (
-        <button
-          onClick={() => {
-            setIsLoading(true);
-            gun?.()
-              .user()
-              .auth('miguel', '12345miguel')
-              .then(() => {
-                setIsLoading(false);
+        <>
+          <button onClick={() => signin({ username: 'miguel', password: '12345miguel' })}>
+            login
+          </button>
+
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+
+              await signup({
+                username: data.username,
+                password: data.password,
+                email: data.email,
               });
-          }}
-        >
-          login
-        </button>
+            }}
+          >
+            <h3>Sign up</h3>
+            <input type="text" name="username" placeholder="username" onChange={updateData} />
+            <input type="password" name="password" placeholder="password" onChange={updateData} />
+            <input type="email" name="email" placeholder="email" onChange={updateData} />
+            <button type="submit">Sign up</button>
+          </form>
+        </>
       )}
     </div>
   );
