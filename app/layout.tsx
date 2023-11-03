@@ -1,4 +1,4 @@
-import '@app/styles/global.css';
+import '@app/styles/index.scss';
 
 import { type Metadata } from 'next';
 

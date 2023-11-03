@@ -1,0 +1,7 @@
+@use './menu-main/menu-main' as menu-main;
+@use './menu-pause/menu-pause' as menu-pause;
+
+@mixin apply {
+  @include menu-main.apply;
+  @include menu-pause.apply;
+}

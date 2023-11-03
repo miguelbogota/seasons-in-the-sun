@@ -3,7 +3,7 @@
 exports[`Website / Navigation / Component > should match snapshot 1`] = `
 <div>
   <nav
-    class="navigation_navigation__hx5tsf0"
+    class="navigation"
   >
     <a
       href="/"

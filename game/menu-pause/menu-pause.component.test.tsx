@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import { PauseMenu } from './pause-menu.component';
+import { PauseMenu } from './menu-pause.component';
 
 describe('Game / PauseMenu / Component', () => {
   it('should match snapshot', () => {

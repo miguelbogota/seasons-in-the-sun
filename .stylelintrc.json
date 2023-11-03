@@ -1,0 +1,15 @@
+{
+  "plugins": ["stylelint-prettier", "stylelint-scss"],
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-prettier/recommended",
+    "stylelint-config-prettier"
+  ],
+  "rules": {
+    "prettier/prettier": true,
+    "selector-not-notation": null,
+    "no-descending-specificity": null,
+    "at-rule-disallowed-list": ["import", "extends"],
+    "color-hex-length": "long"
+  }
+}

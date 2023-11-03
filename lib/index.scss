@@ -1,0 +1,5 @@
+@use './spinner/spinner' as spinner;
+
+@mixin apply {
+  @include spinner.apply;
+}

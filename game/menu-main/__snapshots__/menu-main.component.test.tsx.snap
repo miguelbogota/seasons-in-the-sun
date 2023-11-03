@@ -3,37 +3,30 @@
 exports[`Game / MenuMain / Component > should match snapshot 1`] = `
 <div>
   <div
-    class="menu-main__8gkvil1"
+    class="menu-main"
   >
     <img
       alt="Background Image"
-      class="menu-main__8gkvil2"
       src="/images/menu-main-background.webp"
     />
     <div
-      class="menu-main__8gkvil3"
+      class="menu"
     >
-      <h1
-        class="menu-main__8gkvil4"
-      >
+      <h1>
         Seasons in the Sun
       </h1>
-      <button
-        class="menu-main__8gkvil5"
-      >
+      <button>
         Begin
       </button>
-      <button
-        class="menu-main__8gkvil5"
-      >
+      <button>
         Options
       </button>
     </div>
     <div
-      class="menu-main__8gkvil6"
+      class="authentication-menu"
     >
       <div
-        class="authentication_root__11zwokp0"
+        class="authentication-container"
       >
         <pre>
           null
@@ -44,32 +37,30 @@ exports[`Game / MenuMain / Component > should match snapshot 1`] = `
           </h2>
           <form>
             <div
-              class="text-field_root__f0gaa12"
+              class="text-field"
             >
               <input
-                class="text-field_input__f0gaa13"
                 id=":r0:"
                 name="username"
                 placeholder="Ex. johndoe"
+                type="text"
               />
               <label
-                class="text-field_label__f0gaa14"
                 for=":r0:"
               >
                 Username
               </label>
             </div>
             <div
-              class="text-field_root__f0gaa12"
+              class="text-field"
             >
               <input
-                class="text-field_input__f0gaa13"
                 id=":r1:"
                 name="password"
                 placeholder=""
+                type="text"
               />
               <label
-                class="text-field_label__f0gaa14"
                 for=":r1:"
               >
                 Password
@@ -84,7 +75,7 @@ exports[`Game / MenuMain / Component > should match snapshot 1`] = `
         </div>
         <br />
         <div>
-          --------------------------------------------
+          ---------------------------------------------------------------
         </div>
         <br />
         <div>
@@ -93,64 +84,60 @@ exports[`Game / MenuMain / Component > should match snapshot 1`] = `
           </h2>
           <form>
             <div
-              class="text-field_root__f0gaa12"
+              class="text-field"
             >
               <input
-                class="text-field_input__f0gaa13"
                 id=":r2:"
                 name="username"
                 placeholder="Ex. johndoe"
+                type="text"
               />
               <label
-                class="text-field_label__f0gaa14"
                 for=":r2:"
               >
                 Username
               </label>
             </div>
             <div
-              class="text-field_root__f0gaa12"
+              class="text-field"
             >
               <input
-                class="text-field_input__f0gaa13"
                 id=":r3:"
                 name="password"
                 placeholder=""
+                type="text"
               />
               <label
-                class="text-field_label__f0gaa14"
                 for=":r3:"
               >
                 Password
               </label>
             </div>
             <div
-              class="text-field_root__f0gaa12"
+              class="text-field"
             >
               <input
-                class="text-field_input__f0gaa13"
                 id=":r4:"
                 name="confirmPassword"
                 placeholder=""
+                type="text"
               />
               <label
-                class="text-field_label__f0gaa14"
                 for=":r4:"
               >
                 Confirm Password
               </label>
             </div>
             <div
-              class="text-field_root__f0gaa12"
+              class="text-field"
             >
               <input
-                class="text-field_input__f0gaa13"
                 id=":r5:"
                 name="email"
                 placeholder="Ex. johndoe@email.com"
+                type="text"
               />
               <label
-                class="text-field_label__f0gaa14"
                 for=":r5:"
               >
                 Email
