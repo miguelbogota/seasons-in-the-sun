@@ -1,3 +1,3 @@
 # Game Modules
 
-Here you will ind all the game modules.
+Here you will find all the game modules.

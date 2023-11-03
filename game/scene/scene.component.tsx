@@ -1,9 +1,9 @@
 'use client';
 
-import { GameMenu, useGameMenuState } from '@app/game/menu';
 import { Duck, Viking } from '@app/game/models';
 import { CameraControls, Player } from '@app/game/player';
 import { KeyboardControl } from '@app/game/player/keyboard-control';
+import { useGameState } from '@app/game/state';
 import { theme } from '@app/theme';
 import { Box, Plane, Sky } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
@@ -11,43 +11,51 @@ import { Physics, RigidBody } from '@react-three/rapier';
 import { type ComponentProps, type PropsWithChildren, useRef } from 'react';
 import { type Mesh } from 'three';
 
+import { MenuMain } from '../menu-main';
+import { PauseMenu } from '../pause-menu/pause-menu.component';
+
 /**
  * Main scene to show.
  */
 export function Scene() {
+  const state = useGameState();
+
   return (
     <>
-      <GameMenu />
+      <MenuMain />
+      <PauseMenu />
 
-      <KeyboardControl>
-        <Canvas>
-          <CameraControls.CameraControl />
-          <Sky sunPosition={[100, 20, 100]} />
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[2, 5, 5]} intensity={0.5} castShadow />
+      {state.isPlaying && (
+        <KeyboardControl>
+          <Canvas>
+            <CameraControls.CameraControl />
+            <Sky sunPosition={[100, 20, 100]} />
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[2, 5, 5]} intensity={0.5} castShadow />
 
-          <GamePhysics>
-            {[0, 1.5, 3, 4.5, 6, 7.5].map((v) => (
-              <SimpleBox key={v} position={[v, 4, -15]} />
-            ))}
+            <GamePhysics>
+              {[0, 1.5, 3, 4.5, 6, 7.5].map((v) => (
+                <SimpleBox key={v} position={[v, 4, -15]} />
+              ))}
 
-            <Duck
-              rigidBodyProps={{
-                position: [-3, 4, -15],
-              }}
-            />
+              <Duck
+                rigidBodyProps={{
+                  position: [-3, 4, -15],
+                }}
+              />
 
-            <Viking
-              rigidBodyProps={{
-                position: [-7, 4, -15],
-              }}
-            />
+              <Viking
+                rigidBodyProps={{
+                  position: [-7, 4, -15],
+                }}
+              />
 
-            <Ground />
-            <Player />
-          </GamePhysics>
-        </Canvas>
-      </KeyboardControl>
+              <Ground />
+              <Player />
+            </GamePhysics>
+          </Canvas>
+        </KeyboardControl>
+      )}
     </>
   );
 }
@@ -58,11 +66,10 @@ export function Scene() {
 function GamePhysics(props: PropsWithChildren) {
   const { children } = props;
 
-  const isMenuOpen = useGameMenuState((state) => state.isOpen);
-  const isMenuLoading = useGameMenuState((state) => state.isLoading);
+  const state = useGameState();
 
   return (
-    <Physics gravity={[0, -30, 0]} paused={isMenuOpen || isMenuLoading}>
+    <Physics gravity={[0, -30, 0]} paused={state.isPaused || !state.isPlaying}>
       {children}
     </Physics>
   );

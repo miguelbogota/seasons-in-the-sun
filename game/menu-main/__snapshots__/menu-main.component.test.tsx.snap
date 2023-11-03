@@ -1,0 +1,170 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Game / MenuMain / Component > should match snapshot 1`] = `
+<div>
+  <div
+    class="menu-main__8gkvil1"
+  >
+    <img
+      alt="Background Image"
+      class="menu-main__8gkvil2"
+      src="/images/menu-main-background.webp"
+    />
+    <div
+      class="menu-main__8gkvil3"
+    >
+      <h1
+        class="menu-main__8gkvil4"
+      >
+        Seasons in the Sun
+      </h1>
+      <button
+        class="menu-main__8gkvil5"
+      >
+        Begin
+      </button>
+      <button
+        class="menu-main__8gkvil5"
+      >
+        Options
+      </button>
+    </div>
+    <div
+      class="menu-main__8gkvil6"
+    >
+      <div
+        class="authentication_root__11zwokp0"
+      >
+        <pre>
+          null
+        </pre>
+        <div>
+          <h2>
+            Welcome Back
+          </h2>
+          <form>
+            <div
+              class="text-field_root__f0gaa12"
+            >
+              <input
+                class="text-field_input__f0gaa13"
+                id=":r0:"
+                name="username"
+                placeholder="Ex. johndoe"
+              />
+              <label
+                class="text-field_label__f0gaa14"
+                for=":r0:"
+              >
+                Username
+              </label>
+            </div>
+            <div
+              class="text-field_root__f0gaa12"
+            >
+              <input
+                class="text-field_input__f0gaa13"
+                id=":r1:"
+                name="password"
+                placeholder=""
+              />
+              <label
+                class="text-field_label__f0gaa14"
+                for=":r1:"
+              >
+                Password
+              </label>
+            </div>
+            <button
+              type="submit"
+            >
+              Sign in
+            </button>
+          </form>
+        </div>
+        <br />
+        <div>
+          --------------------------------------------
+        </div>
+        <br />
+        <div>
+          <h2>
+            Join
+          </h2>
+          <form>
+            <div
+              class="text-field_root__f0gaa12"
+            >
+              <input
+                class="text-field_input__f0gaa13"
+                id=":r2:"
+                name="username"
+                placeholder="Ex. johndoe"
+              />
+              <label
+                class="text-field_label__f0gaa14"
+                for=":r2:"
+              >
+                Username
+              </label>
+            </div>
+            <div
+              class="text-field_root__f0gaa12"
+            >
+              <input
+                class="text-field_input__f0gaa13"
+                id=":r3:"
+                name="password"
+                placeholder=""
+              />
+              <label
+                class="text-field_label__f0gaa14"
+                for=":r3:"
+              >
+                Password
+              </label>
+            </div>
+            <div
+              class="text-field_root__f0gaa12"
+            >
+              <input
+                class="text-field_input__f0gaa13"
+                id=":r4:"
+                name="confirmPassword"
+                placeholder=""
+              />
+              <label
+                class="text-field_label__f0gaa14"
+                for=":r4:"
+              >
+                Confirm Password
+              </label>
+            </div>
+            <div
+              class="text-field_root__f0gaa12"
+            >
+              <input
+                class="text-field_input__f0gaa13"
+                id=":r5:"
+                name="email"
+                placeholder="Ex. johndoe@email.com"
+              />
+              <label
+                class="text-field_label__f0gaa14"
+                for=":r5:"
+              >
+                Email
+              </label>
+            </div>
+            <button
+              type="submit"
+            >
+              Sign up
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

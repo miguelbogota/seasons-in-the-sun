@@ -114,6 +114,7 @@ export default [
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/no-unknown-property': 'off',
+      'react-hooks/exhaustive-deps': 'off',
     },
   },
   {
