@@ -63,7 +63,10 @@ function gunImpl() {
          * Subscribes to changes at the given path.
          */
         changes(callback: (value: PathMatcher<PublicSpace, TPath>) => void): () => void {
-          instance.on((data) => callback(data));
+          instance.on((_data) => {
+            const data = omit(_data, '_');
+            callback(data);
+          });
           return () => instance.off();
         },
       };
@@ -112,7 +115,10 @@ function gunImpl() {
              * Subscribes to changes at the given path.
              */
             changes(callback: (value: PathMatcher<UserSpace, TPath>) => void): () => void {
-              instance.on((data) => callback(data));
+              instance.on((_data) => {
+                const data = omit(_data, '_');
+                callback(data);
+              });
               return () => instance.off();
             },
           };
