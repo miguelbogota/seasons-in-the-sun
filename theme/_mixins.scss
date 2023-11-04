@@ -1,0 +1,8 @@
+/**
+ * Responsive mixin.
+ */
+@mixin small-device {
+  @media screen and (width <= 800px) {
+    @content;
+  }
+}

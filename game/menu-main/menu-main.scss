@@ -1,0 +1,59 @@
+@mixin apply {
+  .menu-main {
+    --menu-spacing: 50px;
+
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+    & > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    & > .menu {
+      position: absolute;
+      left: var(--menu-spacing);
+      bottom: var(--menu-spacing);
+
+      & > h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+      }
+
+      & > button {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: white;
+        background-color: var(--primary);
+        border: none;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+      }
+    }
+
+    & > .authentication-menu {
+      position: absolute;
+      right: var(--menu-spacing);
+      top: var(--menu-spacing);
+    }
+
+    html:has(&),
+    body:has(&) {
+      overflow: hidden;
+    }
+  }
+}

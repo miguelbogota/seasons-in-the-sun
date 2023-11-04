@@ -1,23 +1,40 @@
-import { ThemeBreakpoint } from './breakpoint';
-import { ThemePalette } from './palette';
-
-export { type ThemeBreakpoint, type ThemeBreakpointOption } from './breakpoint';
-export { type GetColorConfig, type ThemeColor, type ThemeColorOption } from './color';
-export { type ThemeFullColorOption, type ThemePalette, type ThemePaletteOption } from './palette';
-export * from '@vanilla-extract/css';
-
-/** Theme object with all the values to use in the project styling. */
-export const theme = Object.freeze({
-  get breakpoints() {
-    return new ThemeBreakpoint();
-  },
-  get palette() {
-    const palette = new ThemePalette();
-    return Object.assign(palette.get.bind(palette), {
-      game: palette.three.bind(palette),
-    });
-  },
-});
-
-/** Type of the theme. */
-export type Theme = typeof theme;
+export type ColorOption =
+  // Color
+  | 'white'
+  | 'light'
+  | 'dark'
+  | 'black'
+  | 'scale-1'
+  | 'scale-2'
+  | 'scale-3'
+  | 'scale-4'
+  | 'scale-5'
+  | 'scale-6'
+  | 'scale-7'
+  | 'red'
+  | 'pink'
+  | 'purple'
+  | 'deep-purple'
+  | 'indigo'
+  | 'blue'
+  | 'light-blue'
+  | 'cyan'
+  | 'teal'
+  | 'green'
+  | 'light-green'
+  | 'lime'
+  | 'yellow'
+  | 'amber'
+  | 'orange'
+  | 'deep-orange'
+  | 'brown'
+  | 'grey'
+  | 'blue-grey'
+  // Palette
+  | 'primary'
+  | 'secondary'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'divider';

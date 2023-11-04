@@ -2,7 +2,6 @@ import { TextField } from '@app/ui/text-field';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import * as styles from './authentication.css';
 import {
   type AppSigninCredentials,
   appSigninCredentialsSchema,
@@ -17,7 +16,7 @@ export function Authentication() {
   return isLoading ? (
     'loading...'
   ) : (
-    <div className={styles.root}>
+    <div className="authentication-container">
       <pre>{JSON.stringify(user, null, 2)}</pre>
 
       {user ? (
@@ -28,7 +27,7 @@ export function Authentication() {
         <>
           <Signin />
           <br />
-          <div>--------------------------------------------</div>
+          <div>---------------------------------------------------------------</div>
           <br />
           <Signup />
         </>

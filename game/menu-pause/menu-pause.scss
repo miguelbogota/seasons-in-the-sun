@@ -1,0 +1,42 @@
+@mixin apply {
+  .menu-pause {
+    position: fixed;
+    inset: 0;
+    z-index: var(--navigation);
+    background-color: #7a7a7a7d;
+
+    & > .menu {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 400px;
+      padding: var(--space-4);
+      background-color: var(--background-sheet);
+      border-radius: var(--radius-normal);
+      box-shadow: 0 0 10px 0 #00000080;
+
+      button {
+        width: 100%;
+        padding: var(--space-2);
+        background-color: var(--background-main);
+        text-align: center;
+        margin-bottom: 1rem;
+        border-radius: var(--radius-normal);
+        font-size: var(--size-5);
+        font-weight: var(--weight-bold);
+        color: var(--primary);
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          border 0.2s,
+          color 0.2s;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

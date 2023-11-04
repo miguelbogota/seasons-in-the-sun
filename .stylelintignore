@@ -1,0 +1,9 @@
+node_modules
+build
+public
+.next
+*.ico
+*.log
+*.lock
+pnpm-lock.yaml
+generated

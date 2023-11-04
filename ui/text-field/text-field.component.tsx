@@ -1,8 +1,6 @@
-import { type ThemeFullColorOption } from '@app/theme';
+import { type ColorOption } from '@app/theme';
 import clsx from 'clsx';
 import { type ComponentPropsWithoutRef, forwardRef, type Ref, useId } from 'react';
-
-import * as styles from './text-field.css';
 
 /** Props for the TextField component. */
 export type TextFieldProps = BaseProps & OmitProps;
@@ -10,7 +8,7 @@ type OmitProps = Omit<ComponentPropsWithoutRef<'input'>, keyof BaseProps>;
 type BaseProps = {
   label?: string;
   hint?: string;
-  color?: ThemeFullColorOption;
+  color?: ColorOption;
   children?: never;
 };
 
@@ -23,19 +21,15 @@ export const TextField = forwardRef(function TextField(
   const defaultId = useId();
 
   const id = propsId ?? defaultId;
-  const rootClassName = clsx(styles.root, className, {
+  const rootClassName = clsx('text-field', className, {
     [`is-${color}`]: color,
   });
 
   return (
     <div className={rootClassName}>
-      <input {...props} id={id} className={styles.input} ref={ref} placeholder={placeholder} />
-      {label && (
-        <label className={styles.label} htmlFor={id}>
-          {label}
-        </label>
-      )}
-      {hint && <p className={styles.hint}>{hint}</p>}
+      <input {...props} id={id} ref={ref} placeholder={placeholder} type="text" />
+      {label && <label htmlFor={id}>{label}</label>}
+      {hint && <p className="hint">{hint}</p>}
     </div>
   );
 });

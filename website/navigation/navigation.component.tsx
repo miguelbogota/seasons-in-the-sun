@@ -1,7 +1,5 @@
 import Link from 'next/link';
 
-import * as styles from './navigation.css';
-
 export type NavigationProps = {
   // Empty for now.
 };
@@ -10,7 +8,7 @@ export function Navigation(props: NavigationProps) {
   const {} = props;
 
   return (
-    <nav className={styles.navigation}>
+    <nav className="navigation">
       {routes.map(({ path, name }) => (
         <Link key={path} href={path}>
           {name}

@@ -1,0 +1,73 @@
+$colors: 'white', 'light', 'dark', 'black', 'scale-1', 'scale-2', 'scale-3', 'scale-4', 'scale-5',
+  'scale-6', 'scale-7', 'red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue',
+  'cyan', 'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange',
+  'brown', 'grey', 'blue-grey', 'primary', 'secondary', 'info', 'success', 'warning', 'error',
+  'divider';
+
+@mixin apply {
+  div.text-field {
+    --element-color: var(--text-primary);
+    --element-bg-color: var(--background-sheet);
+    --element-font-size: var(--size-6);
+
+    display: inline-block;
+    position: relative;
+    border-radius: var(--radius-small);
+    border: 1px solid var(--element-color);
+    font-size: var(--element-font-size);
+
+    input[type='text'] {
+      width: 100%;
+      font-size: 1em;
+      padding: 0.5em;
+      color: var(--element-color);
+      background-color: var(--element-bg-color);
+      background-clip: padding-box;
+      transition:
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
+
+      & + label {
+        position: absolute;
+        display: block;
+        margin-left: 0.4em;
+        top: -0.5em;
+        font-size: 0.66em;
+        padding: 0 5px;
+        background-color: var(--element-bg-color);
+        color: var(--element-color);
+        transition:
+          font-size 0.1s ease-in-out,
+          top 0.1s ease-in-out;
+      }
+
+      &::placeholder {
+        opacity: 0;
+      }
+
+      &:placeholder-shown {
+        &:focus-visible {
+          &::placeholder {
+            opacity: 1;
+          }
+
+          & + label {
+            top: -0.5em;
+            font-size: 0.66em;
+          }
+        }
+
+        & + label {
+          top: 0.5em;
+          font-size: 1em;
+        }
+      }
+    }
+
+    @each $color in $colors {
+      &.is-#{$color} {
+        --element-color: var(--#{$color});
+      }
+    }
+  }
+}

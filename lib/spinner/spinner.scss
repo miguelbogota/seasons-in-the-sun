@@ -1,0 +1,44 @@
+@mixin apply {
+  svg.spinner {
+    animation: 2s linear infinite rotate;
+    width: 1.75rem;
+    overflow: visible;
+
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    circle {
+      animation: 1.4s ease-in-out infinite both circle-animation;
+      display: block;
+      fill: transparent;
+      stroke: var(--text-secondary);
+      stroke-linecap: round;
+      stroke-dasharray: 283;
+      stroke-dashoffset: 280;
+      stroke-width: 0.8rem;
+      transform-origin: 50% 50%;
+    }
+
+    @keyframes circle-animation {
+      0%,
+      25% {
+        stroke-dashoffset: 280;
+        transform: rotate(0);
+      }
+
+      50%,
+      75% {
+        stroke-dashoffset: 75;
+        transform: rotate(45deg);
+      }
+
+      100% {
+        stroke-dashoffset: 280;
+        transform: rotate(360deg);
+      }
+    }
+  }
+}
