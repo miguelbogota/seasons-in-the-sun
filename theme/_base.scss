@@ -1,5 +1,3 @@
-@use '../website/index' as website;
-
 @mixin apply {
   html,
   body {
@@ -7,6 +5,4 @@
     height: 100%;
     color: var(--text-primary);
   }
-
-  @include website.apply;
 }

@@ -1,4 +1,4 @@
-import { type ColorOption } from '@app/styles';
+import { type ColorOption } from '@app/theme';
 import clsx from 'clsx';
 import { type ComponentPropsWithoutRef, forwardRef, type Ref, useId } from 'react';
 
