@@ -1,0 +1,18 @@
+@mixin apply {
+  h1.game-logo {
+    font-size: var(--size-1);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-3);
+    text-transform: uppercase;
+    word-spacing: 6px;
+
+    & > span {
+      display: block;
+
+      &:first-child {
+        font-size: 0.72em;
+        margin-bottom: -0.3em;
+      }
+    }
+  }
+}

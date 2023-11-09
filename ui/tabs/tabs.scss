@@ -1,0 +1,38 @@
+@mixin apply {
+  .tab-group {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    & > [role='tablist'] {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      border-bottom: 1px solid var(--divider);
+
+      & > [role='tab'] {
+        position: relative;
+        cursor: pointer;
+        border: 0;
+        padding: var(--space-2) var(--space-4);
+        text-transform: uppercase;
+        font-weight: var(--weight-bold);
+
+        & > .underline {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: var(--primary);
+        }
+      }
+    }
+
+    & > .panels {
+      display: block;
+      padding: var(--space-2);
+    }
+  }
+}

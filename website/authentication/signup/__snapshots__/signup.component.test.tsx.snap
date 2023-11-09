@@ -1,0 +1,77 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Website / Authentication / Signup / Component > should match snapshot 1`] = `
+<div>
+  <div
+    class="signup"
+  >
+    <h2>
+      Join
+    </h2>
+    <form>
+      <div
+        class="text-field"
+      >
+        <input
+          id=":r0:"
+          name="username"
+          placeholder="Ex. johndoe"
+        />
+        <label
+          for=":r0:"
+        >
+          Username
+        </label>
+      </div>
+      <div
+        class="text-field"
+      >
+        <input
+          id=":r1:"
+          name="password"
+          placeholder=""
+        />
+        <label
+          for=":r1:"
+        >
+          Password
+        </label>
+      </div>
+      <div
+        class="text-field"
+      >
+        <input
+          id=":r2:"
+          name="confirmPassword"
+          placeholder=""
+        />
+        <label
+          for=":r2:"
+        >
+          Confirm Password
+        </label>
+      </div>
+      <div
+        class="text-field"
+      >
+        <input
+          id=":r3:"
+          name="email"
+          placeholder="Ex. johndoe@email.com"
+        />
+        <label
+          for=":r3:"
+        >
+          Email
+        </label>
+      </div>
+      <button
+        class="button"
+        type="submit"
+      >
+        Sign up
+      </button>
+    </form>
+  </div>
+</div>
+`;

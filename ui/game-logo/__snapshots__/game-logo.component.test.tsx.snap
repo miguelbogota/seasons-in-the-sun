@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UI / GameLogo > should match snapshot 1`] = `
+<div>
+  <h1
+    class="game-logo"
+  >
+    <span>
+      Seasons in
+    </span>
+    <span>
+      the Sun
+    </span>
+  </h1>
+</div>
+`;

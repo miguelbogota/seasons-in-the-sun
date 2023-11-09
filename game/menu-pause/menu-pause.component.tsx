@@ -6,7 +6,7 @@ import { useGameState } from '@app/game/state';
 /**
  * Component with the pause menu of the game.
  */
-export function PauseMenu() {
+export function MenuPause() {
   const state = useGameState();
 
   return (

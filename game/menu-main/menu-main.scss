@@ -21,13 +21,6 @@
       left: var(--menu-spacing);
       bottom: var(--menu-spacing);
 
-      & > h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 2rem;
-        text-transform: uppercase;
-      }
-
       & > button {
         display: block;
         width: 100%;
@@ -41,7 +34,19 @@
         border-radius: 0.5rem;
         margin-bottom: 1rem;
         cursor: pointer;
-        transition: background-color 0.2s ease-in-out;
+        transition:
+          background-color 0.2s ease-in-out,
+          scale 0.05s ease-in-out;
+
+        &:hover {
+          scale: 1.02;
+        }
+
+        &:disabled {
+          background-color: var(--text-disabled);
+          cursor: not-allowed;
+          scale: 1;
+        }
       }
     }
 

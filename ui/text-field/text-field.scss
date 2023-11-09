@@ -16,7 +16,7 @@ $colors: 'white', 'light', 'dark', 'black', 'scale-1', 'scale-2', 'scale-3', 'sc
     border: 1px solid var(--element-color);
     font-size: var(--element-font-size);
 
-    input[type='text'] {
+    & > input {
       width: 100%;
       font-size: 1em;
       padding: 0.5em;

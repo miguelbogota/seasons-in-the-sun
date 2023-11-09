@@ -1,15 +1,21 @@
+@use './signin/signin' as signin;
+@use './signup/signup' as signup;
+
 @mixin apply {
-  .authentication-container {
-    padding: 1rem;
+  .authentication {
     background-color: var(--background-sheet);
     border-radius: 3px;
+
+    &:has(.authenticated-menu) {
+      background-color: unset;
+    }
 
     .text-field {
       display: block;
       margin: 0.6rem 0;
     }
 
-    button {
+    .button {
       display: block;
       text-align: center;
       width: 100%;
@@ -24,5 +30,55 @@
       cursor: pointer;
       transition: background-color 0.2s ease-in-out;
     }
+
+    h2 {
+      text-align: center;
+      font-size: var(--size-5);
+      margin-bottom: var(--space-3);
+    }
+
+    & > .authenticated-menu {
+      position: relative;
+
+      & > .user-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--primary);
+        border-radius: var(--radius-rounded);
+        cursor: pointer;
+
+        & > img {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+        }
+      }
+
+      & > .dropdown-menu {
+        position: absolute;
+        top: calc(100% + var(--space-1));
+        right: 0;
+        background-color: var(--background-sheet);
+        border-radius: var(--radius-normal);
+        box-shadow: 0 0 0.5rem 0 var(--shadow);
+        padding: var(--space-3) var(--space-3) 0 var(--space-3);
+        z-index: var(--modal);
+
+        & > h4 {
+          font-weight: var(--weight-bold);
+          text-transform: uppercase;
+          text-wrap: nowrap;
+          margin-bottom: var(--space-1);
+        }
+
+        & > p {
+          margin-bottom: var(--space-3);
+        }
+      }
+    }
+
+    @include signin.apply;
+    @include signup.apply;
   }
 }

@@ -3,129 +3,175 @@
 exports[`Website / Authentication / Component > should match snapshot 1`] = `
 <div>
   <div
-    class="authentication-container"
+    class="authentication"
   >
-    <pre>
-      null
-    </pre>
-    <div>
-      <h2>
-        Welcome Back
-      </h2>
-      <form>
-        <div
-          class="text-field"
-        >
-          <input
-            id=":r0:"
-            name="username"
-            placeholder="Ex. johndoe"
-            type="text"
-          />
-          <label
-            for=":r0:"
-          >
-            Username
-          </label>
-        </div>
-        <div
-          class="text-field"
-        >
-          <input
-            id=":r1:"
-            name="password"
-            placeholder=""
-            type="text"
-          />
-          <label
-            for=":r1:"
-          >
-            Password
-          </label>
-        </div>
+    <div
+      class="tab-group unauthenticated-menu"
+    >
+      <div
+        role="tablist"
+      >
         <button
-          type="submit"
+          aria-selected="true"
+          class="tab is-selected"
+          role="tab"
+          tabindex="0"
         >
-          Sign in
+          <span
+            class="label"
+          >
+            👋 Sign in
+          </span>
+          <span
+            class="underline"
+            style="opacity: 1;"
+          />
         </button>
-      </form>
-    </div>
-    <br />
-    <div>
-      ---------------------------------------------------------------
-    </div>
-    <br />
-    <div>
-      <h2>
-        Join
-      </h2>
-      <form>
-        <div
-          class="text-field"
-        >
-          <input
-            id=":r2:"
-            name="username"
-            placeholder="Ex. johndoe"
-            type="text"
-          />
-          <label
-            for=":r2:"
-          >
-            Username
-          </label>
-        </div>
-        <div
-          class="text-field"
-        >
-          <input
-            id=":r3:"
-            name="password"
-            placeholder=""
-            type="text"
-          />
-          <label
-            for=":r3:"
-          >
-            Password
-          </label>
-        </div>
-        <div
-          class="text-field"
-        >
-          <input
-            id=":r4:"
-            name="confirmPassword"
-            placeholder=""
-            type="text"
-          />
-          <label
-            for=":r4:"
-          >
-            Confirm Password
-          </label>
-        </div>
-        <div
-          class="text-field"
-        >
-          <input
-            id=":r5:"
-            name="email"
-            placeholder="Ex. johndoe@email.com"
-            type="text"
-          />
-          <label
-            for=":r5:"
-          >
-            Email
-          </label>
-        </div>
         <button
-          type="submit"
+          aria-selected="false"
+          class="tab"
+          role="tab"
+          tabindex="-1"
         >
-          Sign up
+          <span
+            class="label"
+          >
+            🤘 Sign up
+          </span>
         </button>
-      </form>
+      </div>
+      <div
+        class="panels"
+      >
+        <div
+          aria-labelledby="signin"
+          class="panel-content"
+          tabindex="0"
+        >
+          <div
+            class="signin"
+          >
+            <h2>
+              Welcome Back
+            </h2>
+            <form>
+              <div
+                class="text-field"
+              >
+                <input
+                  id=":r0:"
+                  name="username"
+                  placeholder="Ex. johndoe"
+                />
+                <label
+                  for=":r0:"
+                >
+                  Username
+                </label>
+              </div>
+              <div
+                class="text-field"
+              >
+                <input
+                  id=":r1:"
+                  name="password"
+                  placeholder=""
+                  type="password"
+                />
+                <label
+                  for=":r1:"
+                >
+                  Password
+                </label>
+              </div>
+              <button
+                class="button"
+                type="submit"
+              >
+                Sign in
+              </button>
+            </form>
+          </div>
+        </div>
+        <div
+          aria-labelledby="signup"
+          class="panel-content"
+          hidden=""
+          tabindex="0"
+        >
+          <div
+            class="signup"
+          >
+            <h2>
+              Join
+            </h2>
+            <form>
+              <div
+                class="text-field"
+              >
+                <input
+                  id=":r2:"
+                  name="username"
+                  placeholder="Ex. johndoe"
+                />
+                <label
+                  for=":r2:"
+                >
+                  Username
+                </label>
+              </div>
+              <div
+                class="text-field"
+              >
+                <input
+                  id=":r3:"
+                  name="password"
+                  placeholder=""
+                />
+                <label
+                  for=":r3:"
+                >
+                  Password
+                </label>
+              </div>
+              <div
+                class="text-field"
+              >
+                <input
+                  id=":r4:"
+                  name="confirmPassword"
+                  placeholder=""
+                />
+                <label
+                  for=":r4:"
+                >
+                  Confirm Password
+                </label>
+              </div>
+              <div
+                class="text-field"
+              >
+                <input
+                  id=":r5:"
+                  name="email"
+                  placeholder="Ex. johndoe@email.com"
+                />
+                <label
+                  for=":r5:"
+                >
+                  Email
+                </label>
+              </div>
+              <button
+                class="button"
+                type="submit"
+              >
+                Sign up
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -12,7 +12,7 @@ type BaseProps = {
   children?: never;
 };
 
-export const TextField = forwardRef(function TextField(
+export const TextField = forwardRef(function TextFieldRoot(
   inProps: TextFieldProps,
   ref: Ref<HTMLInputElement>,
 ) {
@@ -27,7 +27,7 @@ export const TextField = forwardRef(function TextField(
 
   return (
     <div className={rootClassName}>
-      <input {...props} id={id} ref={ref} placeholder={placeholder} type="text" />
+      <input {...props} id={id} ref={ref} placeholder={placeholder} />
       {label && <label htmlFor={id}>{label}</label>}
       {hint && <p className="hint">{hint}</p>}
     </div>

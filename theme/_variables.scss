@@ -52,7 +52,7 @@
     --space-8: 9rem;
 
     // Sizes
-    --size-1: 3.5rem;
+    --size-1: 4.5rem;
     --size-2: 3rem;
     --size-3: 2.5rem;
     --size-4: 1.75rem;
@@ -89,6 +89,8 @@
       --text-secondary: var(--scale-4);
       --text-disabled: var(--scale-3);
       --text-inverted: var(--text-dark);
+      --divider: var(--scale-2);
+      --shadow: hsl(from var(--scale-7) h s l / 40%);
       --background-main: var(--white);
       --background-sheet: var(--scale-1);
     }
@@ -98,6 +100,8 @@
       --text-secondary: var(--scale-4);
       --text-disabled: var(--scale-5);
       --text-inverted: var(--text-light);
+      --divider: var(--scale-6);
+      --shadow: hsl(from var(--black) h s l / 40%);
       --background-main: var(--black);
       --background-sheet: var(--scale-7);
     }

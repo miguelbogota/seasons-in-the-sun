@@ -1,9 +1,9 @@
 /**
  * Reduce the transparency of a color
- * @param {Color} $color - The color to reduce the transparency of
- * @param {Number} $amount - The amount to reduce the transparency by
- * @return {Color} - The new color
+ * @param {Color} $color - The color to reduce the transparency of.
+ * @param {Number} $transparency - Transparency to reduce the color to.
+ * @return {Color} - The new color.
  */
-@function reduce-transparency($color, $amount, $transparency: 100%) {
-  @return color-mix(in srgb, $color $amount, transparent $transparency);
+@function reduce-transparency($color, $transparency: 100%) {
+  @return hsl(from $color h s l / $transparency);
 }

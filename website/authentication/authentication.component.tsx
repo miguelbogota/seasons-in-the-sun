@@ -1,134 +1,67 @@
-import { TextField } from '@app/ui/text-field';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { Spinner } from '@app/ui/spinner';
+import { TabGroup } from '@app/ui/tabs';
+import { useState } from 'react';
 
-import {
-  type AppSigninCredentials,
-  appSigninCredentialsSchema,
-  type AppSignupCredentials,
-  appSignupCredentialsSchema,
-  useAuthentication,
-} from './state';
+import { Signin } from './signin';
+import { Signup } from './signup';
+import { useAuthentication } from './state';
 
 export function Authentication() {
-  const { isLoading, user, signout } = useAuthentication();
+  const { isLoading, user } = useAuthentication();
 
-  return isLoading ? (
-    'loading...'
-  ) : (
-    <div className="authentication-container">
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-
-      {user ? (
-        <>
-          <button onClick={signout}>Sign out</button>
-        </>
-      ) : (
-        <>
-          <Signin />
-          <br />
-          <div>---------------------------------------------------------------</div>
-          <br />
-          <Signup />
-        </>
-      )}
+  return (
+    <div className="authentication">
+      {isLoading && <Spinner />}
+      {!isLoading && !user && <UnauthenticatedMenu />}
+      {!isLoading && user && <AuthenticatedMenu />}
     </div>
   );
 }
 
-function Signin() {
-  const { signin } = useAuthentication();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<AppSigninCredentials>({
-    criteriaMode: 'all',
-    resolver: zodResolver(appSigninCredentialsSchema),
-  });
-
-  const onSubmit = handleSubmit(async (data) => {
-    await signin(data).catch(console.error);
-  });
+function UnauthenticatedMenu() {
+  const [value, setValue] = useState<'signin' | 'signup'>('signin');
 
   return (
-    <div>
-      <h2>Welcome Back</h2>
-      <form onSubmit={onSubmit}>
-        <TextField
-          {...register('username')}
-          label="Username"
-          placeholder="Ex. johndoe"
-          hint={errors.username?.message}
-        />
-
-        <TextField {...register('password')} label="Password" hint={errors.password?.message} />
-
-        <button type="submit">Sign in</button>
-      </form>
-    </div>
+    <TabGroup
+      value={value}
+      onChange={setValue}
+      className="unauthenticated-menu"
+      panels={[
+        {
+          value: 'signin',
+          label: '👋 Sign in',
+          content: <Signin />,
+        },
+        {
+          value: 'signup',
+          label: '🤘 Sign up',
+          content: <Signup />,
+        },
+      ]}
+    />
   );
 }
 
-function Signup() {
-  const { signup } = useAuthentication();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<AppSignupCredentials>({
-    criteriaMode: 'all',
-    resolver: zodResolver(appSignupCredentialsSchema),
-  });
-
-  const onSubmit = handleSubmit(async (data) => {
-    await signup(data).catch(console.error);
-  });
+function AuthenticatedMenu() {
+  const { user, signout } = useAuthentication();
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div>
-      <h2>Join</h2>
-      <form onSubmit={onSubmit}>
-        <TextField
-          {...register('username')}
-          label="Username"
-          placeholder="Ex. johndoe"
-          hint={errors.username?.message}
-        />
-
-        <TextField {...register('password')} label="Password" />
-        {errors?.password?.types &&
-          Object.entries(errors.password.types).map(([type, message]) =>
-            Array.isArray(message) ? (
-              message.map((message) => (
-                <>
-                  <p key={type}>{message}</p>
-                  <br />
-                </>
-              ))
-            ) : (
-              <>
-                <p key={type}>{message}</p>
-                <br />
-              </>
-            ),
-          )}
-
-        <TextField
-          {...register('confirmPassword')}
-          label="Confirm Password"
-          hint={errors.confirmPassword?.message}
-        />
-
-        <TextField
-          {...register('email')}
-          label="Email"
-          placeholder="Ex. johndoe@email.com"
-          hint={errors.email?.message}
-        />
-
-        <button type="submit">Sign up</button>
-      </form>
-    </div>
+    user && (
+      <div className="authenticated-menu">
+        <button className="user-icon" onClick={() => setShowMenu((prev) => !prev)}>
+          <img src={user.imageUrl} alt={`${user.username} profile image`} />
+        </button>
+        {showMenu && (
+          <div className="dropdown-menu">
+            <h4>Hey there @{user.username}!</h4>
+            <p>{user.email}</p>
+            <button className="button" onClick={signout}>
+              Sign out
+            </button>
+          </div>
+        )}
+      </div>
+    )
   );
 }

@@ -1,7 +1,8 @@
 'use client';
 
 import { emitCameraControlEvent } from '@app/game/player/camera-control';
-import { Authentication } from '@app/website/authentication';
+import { GameLogo } from '@app/ui/game-logo';
+import { Authentication, useAuthentication } from '@app/website/authentication';
 
 import { useGameState } from '../state';
 
@@ -10,6 +11,7 @@ import { useGameState } from '../state';
  */
 export function MenuMain() {
   const state = useGameState();
+  const { is: isSignedIn } = useAuthentication();
 
   return (
     !state.isPlaying &&
@@ -18,10 +20,10 @@ export function MenuMain() {
         <img src="/images/menu-main-background.webp" alt="Background Image" />
 
         <div className="menu">
-          <h1>Seasons in the Sun</h1>
+          <GameLogo style={{ marginBottom: '2rem' }} />
 
           <button
-            disabled={state.isLoading}
+            disabled={state.isLoading || !isSignedIn}
             onClick={() => {
               state.startGame().then(() => {
                 setTimeout(() => {

@@ -9,6 +9,7 @@
     "prettier/prettier": true,
     "selector-not-notation": null,
     "no-descending-specificity": null,
+    "declaration-block-no-redundant-longhand-properties": null,
     "at-rule-disallowed-list": ["import", "extends"],
     "color-hex-length": "long"
   }
