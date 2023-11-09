@@ -1,5 +1,5 @@
-@use './reset' as reset-styles;
 @use './variables' as variables;
+@use './reset' as reset-styles;
 @use './base' as base-styles;
 @use 'ui/index' as ui-styles;
 @use 'game/index' as game-styles;

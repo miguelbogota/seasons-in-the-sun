@@ -16,6 +16,16 @@ $colors: 'white', 'light', 'dark', 'black', 'scale-1', 'scale-2', 'scale-3', 'sc
     border: 1px solid var(--element-color);
     font-size: var(--element-font-size);
 
+    // Autofill styles
+    &:has(input:-webkit-autofill) {
+      border-radius: calc(var(--radius-small) + 2px);
+
+      & > input:placeholder-shown + label {
+        top: 0.5em;
+        font-size: 1em;
+      }
+    }
+
     & > input {
       width: 100%;
       font-size: 1em;

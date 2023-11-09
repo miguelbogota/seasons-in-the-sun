@@ -60,6 +60,7 @@ export const useGameState = createStore<GameState>((set) => ({
       return;
     }
 
+    window.onbeforeunload = () => 'Are you sure you want to leave?';
     set(() => ({ isPlaying: true, isLoading: false, isPaused: false }));
   },
   exitGame: async (callback) => {
@@ -71,6 +72,7 @@ export const useGameState = createStore<GameState>((set) => ({
       return;
     }
 
+    window.onbeforeunload = null;
     set(() => ({ isPlaying: false, isLoading: false, isPaused: false }));
   },
   pauseGame: () => {

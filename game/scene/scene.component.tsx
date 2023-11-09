@@ -7,7 +7,7 @@ import { useGameState } from '@app/game/state';
 import { Box, Plane, Sky } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Physics, RigidBody } from '@react-three/rapier';
-import { type ComponentProps, type PropsWithChildren, useEffect, useRef } from 'react';
+import { type ComponentProps, type PropsWithChildren, useRef } from 'react';
 import { type Mesh } from 'three';
 
 import { MenuMain } from '../menu-main';
@@ -17,10 +17,6 @@ import { MenuPause } from '../menu-pause';
  * Main scene to show.
  */
 export function Scene() {
-  useEffect(() => {
-    window.onbeforeunload = () => 'Are you sure you want to leave?';
-  }, []);
-
   return (
     <>
       <MenuMain />

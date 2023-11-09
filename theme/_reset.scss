@@ -75,8 +75,14 @@
   /**
    * Fix the autofill background color in Chrome.
    */
-  *:-webkit-autofill {
-    background-clip: text !important;
+  *:-webkit-autofill,
+  *:-webkit-autofill:hover,
+  *:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-primary);
+    box-shadow: 0 0 0 1000px color-mix(in srgb, var(--primary) 40%, var(--background-sheet) 80%)
+      inset;
+    outline: 1px solid var(--primary);
+    border-radius: var(--radius-small);
   }
 
   /**
