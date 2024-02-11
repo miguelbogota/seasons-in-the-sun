@@ -9,7 +9,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "watch": "next dev -p 4000",
+    "dev": "next dev -p 4000",
     "build": "next build",
     "start": "next start",
     "lint": "pnpm lint:css && pnpm lint:js",

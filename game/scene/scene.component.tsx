@@ -6,9 +6,8 @@ import { KeyboardControl } from '@app/game/player/keyboard-control';
 import { useGameState } from '@app/game/state';
 import { Box, Plane, Sky } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Physics, RigidBody } from '@react-three/rapier';
-import { type ComponentProps, type PropsWithChildren, useRef } from 'react';
-import { type Mesh } from 'three';
+import { Physics, type RapierRigidBody, RigidBody, vec3 } from '@react-three/rapier';
+import { type ComponentProps, type PropsWithChildren, useEffect, useRef } from 'react';
 
 import { MenuMain } from '../menu-main';
 import { MenuPause } from '../menu-pause';
@@ -31,20 +30,12 @@ export function Scene() {
 
           <GamePhysics>
             {[0, 1.5, 3, 4.5, 6, 7.5].map((v) => (
-              <SimpleBox key={v} position={[v, 4, -15]} />
+              <SimpleBox key={v} initialPosition={[v, 4, -15]} />
             ))}
 
-            <Duck
-              rigidBodyProps={{
-                position: [-3, 4, -15],
-              }}
-            />
+            <Duck initialPosition={[-3, 4, -15]} />
 
-            <Viking
-              rigidBodyProps={{
-                position: [-7, 4, -15],
-              }}
-            />
+            <Viking initialPosition={[-7, 4, -15]} />
 
             <Ground />
             <Player />
@@ -73,12 +64,28 @@ function GamePhysics(props: PropsWithChildren) {
 /**
  * Testing Box component to show while testing.
  */
-function SimpleBox(props: ComponentProps<typeof Box>) {
-  const meshRef = useRef<Mesh>(null);
+function SimpleBox(
+  props: ComponentProps<typeof Box> & { initialPosition: [number, number, number] },
+) {
+  const { initialPosition, ...otherProps } = props;
+
+  const state = useGameState();
+  const ref = useRef<RapierRigidBody>(null);
+
+  // Resets position/rotation when game is over.
+  useEffect(() => {
+    if (!state.isPlaying) {
+      ref.current?.setTranslation(
+        vec3({ x: initialPosition[0], y: initialPosition[1], z: initialPosition[2] }),
+        true,
+      );
+      ref.current?.setRotation({ w: 1, x: 0, y: 0, z: 0 }, true);
+    }
+  }, [state.isPlaying]);
 
   return (
-    <RigidBody colliders="cuboid">
-      <Box {...props} ref={meshRef}>
+    <RigidBody ref={ref} colliders="cuboid" position={initialPosition}>
+      <Box {...otherProps}>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="#9f5c7e" />
       </Box>
