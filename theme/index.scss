@@ -1,15 +1,9 @@
-@use './variables' as variables;
-@use './reset' as reset-styles;
 @use './base' as base-styles;
-@use 'ui/index' as ui-styles;
-@use 'game/index' as game-styles;
-@use 'website/index' as website-styles;
+@use './reset' as reset-styles;
+@use './variables' as variables;
 
-@include reset-styles.apply;
-@include variables.apply;
-
-@include ui-styles.apply;
-@include base-styles.apply;
-
-@include game-styles.apply;
-@include website-styles.apply;
+@mixin apply {
+  @include variables.apply;
+  @include reset-styles.apply;
+  @include base-styles.apply;
+}

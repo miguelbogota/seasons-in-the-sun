@@ -1,4 +1,4 @@
-import '@app/theme/index.scss';
+import './layout.scss';
 
 import clsx from 'clsx';
 import { type Metadata } from 'next';

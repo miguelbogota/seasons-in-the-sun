@@ -1,7 +1,0 @@
-@use './navigation/navigation';
-@use './authentication/authentication';
-
-@mixin apply {
-  @include navigation.apply;
-  @include authentication.apply;
-}
