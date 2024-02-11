@@ -1,0 +1,5 @@
+@use './authentication' as authentication;
+
+@mixin apply {
+  @include authentication.apply;
+}

@@ -1,0 +1,5 @@
+@use './navigation' as navigation;
+
+@mixin apply {
+  @include navigation.apply;
+}

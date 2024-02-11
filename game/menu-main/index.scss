@@ -1,0 +1,5 @@
+@use './menu-main' as menu-main;
+
+@mixin apply {
+  @include menu-main.apply;
+}

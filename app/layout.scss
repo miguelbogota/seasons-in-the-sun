@@ -1,5 +1,5 @@
 @use 'theme/index' as theme;
-@use 'ui/game-logo/game-logo' as game-logo;
+@use 'ui/game-logo/index' as game-logo;
 
 @include theme.apply;
 

@@ -1,0 +1,5 @@
+@use './game-logo' as game-logo;
+
+@mixin apply {
+  @include game-logo.apply;
+}

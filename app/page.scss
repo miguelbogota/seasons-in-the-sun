@@ -1,11 +1,11 @@
-@use 'ui/spinner/spinner' as spinner;
-@use 'ui/tabs/tabs' as tabs;
-@use 'ui/text-field/text-field' as text-field;
+@use 'ui/spinner/index' as spinner;
+@use 'ui/tabs/index' as tabs;
+@use 'ui/text-field/index' as text-field;
 
-@use 'game/menu-main/menu-main' as menu-main;
-@use 'game/menu-pause/menu-pause' as menu-pause;
+@use 'game/menu-main/index' as menu-main;
+@use 'game/menu-pause/index' as menu-pause;
 
-@use 'website/authentication/authentication' as authentication;
+@use 'website/authentication/index' as authentication;
 
 @include menu-main.apply;
 @include menu-pause.apply;

@@ -1,0 +1,5 @@
+@use './text-field' as text-field;
+
+@mixin apply {
+  @include text-field.apply;
+}

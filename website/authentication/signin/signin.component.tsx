@@ -1,4 +1,4 @@
-import { TextField } from '@app/ui';
+import { TextField } from '@app/ui/text-field';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 

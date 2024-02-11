@@ -1,0 +1,5 @@
+@use './menu-pause' as menu-pause;
+
+@mixin apply {
+  @include menu-pause.apply;
+}
