@@ -8,7 +8,7 @@ import { PAUSE_LOADING_TIME } from './constants';
 export type GameState = {
   /**
    * Value to check if the game is being played or not (Initial values is `false` since you start in
-   * the main menu).
+   * the main menu. Pausing the game will not change this value).
    */
   isPlaying: boolean;
   /**
