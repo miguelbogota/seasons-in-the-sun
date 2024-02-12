@@ -137,6 +137,8 @@ export default [
     // Config files settings.
     files: ['*.config.js', '*.config.mjs', '*.config.cjs', '*.config.ts', '*.setup.ts'],
     rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      'no-console': 'off',
       'import/no-default-export': 'off',
     },
   },
