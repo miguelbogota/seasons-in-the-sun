@@ -17,5 +17,5 @@ type PathMatcher<T, Path extends string> = Path extends `${infer Head}.${infer T
     ? PathMatcher<T[Head], Tail>
     : never
   : Path extends keyof T
-  ? T[Path]
-  : never;
+    ? T[Path]
+    : never;

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-git diff --cached --name-only | pnpm test:spelling stdin
+git diff --cached --name-only | pnpm test:spelling --file-list stdin
 pnpm test:lint-staged
 pnpm test:unit
 pnpm build

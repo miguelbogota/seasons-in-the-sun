@@ -1,7 +1,7 @@
 {
   "version": "0.2",
   "allowCompoundWords": true,
-  "ignorePaths": ["node_modules", ".vscode", ".git/objects", "pnpm-lock.yaml", "*.snap"],
+  "ignorePaths": ["node_modules", ".vscode", ".git", "pnpm-lock.yaml", "*.snap", "public"],
   "dictionaryDefinitions": [],
   "dictionaries": [],
   "ignoreWords": [],
